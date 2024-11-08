@@ -1,0 +1,3 @@
+```cmd
+type file.txt
+```

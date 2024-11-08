@@ -1,0 +1,3 @@
+Used for managing user accounts.
+Creating/modifying...
+netuser "username & password" /add

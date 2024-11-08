@@ -1,0 +1,1 @@
+Used for establishing sessions and accessing printers or files [[TCP]] and [[UDP]].

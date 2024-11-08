@@ -1,0 +1,1 @@
+Used for displaying detailed information about your system.

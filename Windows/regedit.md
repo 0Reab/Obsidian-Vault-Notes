@@ -1,0 +1,1 @@
+Used for opening registry editor via command.

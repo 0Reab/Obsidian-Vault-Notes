@@ -1,0 +1,1 @@
+Python is an [[Object oriented]] programming language with a simple syntax that can be used for automation among many other uses (machine learning, data analysis...).

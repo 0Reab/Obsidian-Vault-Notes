@@ -1,0 +1,1 @@
+Used to print working directory, display path you are currently in.

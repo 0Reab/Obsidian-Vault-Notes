@@ -1,0 +1,25 @@
+- [x] Learn sql injections THM room
+	- [x] Finish room
+	- [x] Write notes
+	
+- [ ] Finish Gallery THM room using new knowledge
+
+- [ ] Learn priv escalation THM room
+	- [ ] Finish room
+	- [ ] Write notes
+- [ ] OWASP top 10 THM room
+	- [ ] 1. vuln
+	- [ ] 2. vuln ...
+- [x] Learn network services THM room
+	- [x] Finish room
+	- [x] Write notes
+
+- [x] Make a script to reconnect rev shell in case your clumsy ass drops it by miss clicking
+- [ ] Make linux privilege escalation tool in bash for ctf
+- [ ] JS rev shell or RCE in browser console? Experiment
+- [ ] Python multi threaded bruteforce tool :)
+- [x] Research why does export TERM=xterm brick my shell
+- [ ] How to add yourself to sudoers and shadow and passwd files to be root user
+- [x] mc server /sat $ bug research
+- [x] Python RCE test for mc server script
+- [x] Python newboston tutorials
