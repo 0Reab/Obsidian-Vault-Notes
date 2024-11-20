@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Python/Data structures/Hashmap.md",
+                "file": "Python/Pythonic Code.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Hashmap"
+              "title": "Pythonic Code"
             }
           }
         ]
@@ -139,10 +139,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Python/Data structures/Hashmap.md"
+                "file": "Pasted image 20241107205220.png"
               },
               "icon": "lucide-list",
-              "title": "Outline of Hashmap"
+              "title": "Outline of Pasted image 20241107205220"
             }
           },
           {
@@ -173,19 +173,27 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "bbbdb5cab72b5086",
+  "active": "d99c14cd728ffe3c",
   "lastOpenFiles": [
+    "Hacking/Methodology/Active directory/Introduction.md",
+    "Python/Pythonic Code.md",
+    "Pasted image 20241118172643.png",
+    "Pasted image 20241118172509.png",
+    "Pasted image 20241118172316.png",
+    "Pasted image 20241118172016.png",
+    "Pasted image 20241118145948.png",
+    "Pasted image 20241107205220.png",
+    "Hacking/Methodology/Active directory",
+    "Hacking/Methodology/Active directory.md",
+    "Pasted image 20241107193813.png",
+    "Pasted image 20241107171559.png",
     "Python/Data structures/Hashmap.md",
     "Python/Methods and Functions useful/tkinter.md",
     "Python/Data structures/Queue.md",
-    "Pasted image 20241107205220.png",
     "Python/Methods and Functions useful/Dunder methods aka Magic methods.md",
     "Python/Data structures/Stack.md",
     "Python/Data structures/Linked lists.md",
     "Python/Methods and Functions useful/Lambda.md",
-    "Pasted image 20241107193813.png",
-    "Pasted image 20241107171559.png",
-    "Python/Untitled.md",
     "Python/Data structures",
     "Hacking/Methodology/Web hax/SQL injections.md",
     "Hacking/Bug bounty/Bug bounty - Getting started.md",
@@ -204,9 +212,6 @@
     "SQL.md",
     "Hacking/Methodology/Essentials/Vulnerabilities 101.md",
     "Hacking/Methodology/Exploitation/Meterpreter.md",
-    "Hacking/Methodology/Enumeration and scanning/Subdomain enumeration.md",
-    "Hacking/Methodology/Enumeration and scanning/Passive Reconnaissance.md",
-    "CTF/TryHackMe/Cyborg.md",
     "Hacking/Methodology/Essentials",
     "Hacking/Methodology/Web hax",
     "Hacking/Pentesting",
@@ -217,7 +222,6 @@
     "Untitled 1.canvas",
     "Untitled.canvas",
     "CTF/Labz",
-    "Hacking/Methodology/Enumeration and scanning",
     "Networking/Untitled.canvas"
   ]
 }
