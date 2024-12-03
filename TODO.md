@@ -23,3 +23,9 @@
 - [x] mc server /sat $ bug research
 - [x] Python RCE test for mc server script
 - [x] Python newboston tutorials
+- [ ] Make astronomy session tracker
+	- [ ] Use PostgreSql
+	- [ ] Tkinter ui
+	- [ ] Display stats
+	- [ ] Use weather and moon free api for data
+	- [ ] Image metadata read

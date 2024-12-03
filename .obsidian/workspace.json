@@ -8,7 +8,21 @@
         "type": "tabs",
         "children": [
           {
-            "id": "7766695ee51f3700",
+            "id": "f1e5a7be9f3c9507",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Python/Exercises/Getting cracked with Leetcode.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Getting cracked with Leetcode"
+            }
+          },
+          {
+            "id": "b56029e0b927f3b2",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -22,20 +36,35 @@
             }
           },
           {
-            "id": "c1cdd6b7031f1fec",
+            "id": "a6f406f93bbece6c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Python/Methods and Functions useful/Itertools.md",
+                "file": "TODO.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Itertools"
+              "title": "TODO"
+            }
+          },
+          {
+            "id": "ba21f38a743bf0d7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Hacking/Methodology/Web hax/Python Flask.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Python Flask"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -91,8 +120,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 277.5,
-    "collapsed": true
+    "width": 277.5
   },
   "right": {
     "id": "8a2e8c20aa21202c",
@@ -188,21 +216,33 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "7766695ee51f3700",
+  "active": "a6f406f93bbece6c",
   "lastOpenFiles": [
-    "Python/Methods and Functions useful/Itertools.md",
     "Python/Pythonic Code.md",
+    "Hacking/Methodology/Web hax/Python Flask.md",
+    "Python/Exercises/Getting cracked with Leetcode.md",
+    "Python/Methods and Functions useful/Itertools.md",
+    "Python/JSON and rw IO ops.md",
+    "Hacking/Methodology/Essentials/John hash cracking.md",
+    "Python/Exercises/Leetcode/Word Search II.md",
+    "Pasted image 20241126144850.png",
+    "Python/Exercises/Leetcode",
+    "Python/Exercises/Untitled.md",
+    "Hacking/Bug bounty/Step by step guide.md",
+    "Hacking/Bug bounty/Bug bounty - Getting started.md",
+    "Hacking/Methodology/Active directory/Initial Attack Vectors.md",
+    "Pasted image 20241125161328.png",
+    "Pasted image 20241125161256.png",
+    "Pasted image 20241125161024.png",
+    "Pasted image 20241125160755.png",
     "Hacking/Methodology/Active directory/Introduction.md",
     "Pasted image 20241118172643.png",
     "Pasted image 20241118172509.png",
     "Pasted image 20241118172316.png",
     "Pasted image 20241118172016.png",
     "Pasted image 20241118145948.png",
-    "Pasted image 20241107205220.png",
     "Hacking/Methodology/Active directory",
     "Hacking/Methodology/Active directory.md",
-    "Pasted image 20241107193813.png",
-    "Pasted image 20241107171559.png",
     "Python/Data structures/Hashmap.md",
     "Python/Methods and Functions useful/tkinter.md",
     "Python/Data structures/Queue.md",
@@ -212,7 +252,6 @@
     "Python/Methods and Functions useful/Lambda.md",
     "Python/Data structures",
     "Hacking/Methodology/Web hax/SQL injections.md",
-    "Hacking/Bug bounty/Bug bounty - Getting started.md",
     "CTF/BBP & VDP/Tomtom.md",
     "CTF/BBP & VDP",
     "CTF/Untitled.md",
@@ -220,14 +259,6 @@
     "Hacking/Bug bounty/Tricks.md",
     "Hacking/Bug bounty/Recon basics.md",
     "Hacking/Bug bounty",
-    "Hacking/Untitled.md",
-    "CTF/Labz/Kioptrix.md",
-    "Powershell/Windows makes me miserable.md",
-    "Hacking/Methodology/Enumeration and scanning/Nmap Live Host Discovery.md",
-    "Hacking/Tools/Nmap.md",
-    "SQL.md",
-    "Hacking/Methodology/Essentials/Vulnerabilities 101.md",
-    "Hacking/Methodology/Exploitation/Meterpreter.md",
     "Hacking/Methodology/Essentials",
     "Hacking/Methodology/Web hax",
     "Hacking/Pentesting",
@@ -237,7 +268,6 @@
     "Untitled 2.canvas",
     "Untitled 1.canvas",
     "Untitled.canvas",
-    "CTF/Labz",
     "Networking/Untitled.canvas"
   ]
 }

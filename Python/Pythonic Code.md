@@ -111,3 +111,24 @@ def most_frequent(array):
 #print(most_frequent([1,3,2,3,1,3]))  
 # 3
 ```
+
+```python
+from itertools import chain  
+  
+def matrix_addition(a, b):  
+    result = []  
+    chain_one, chain_two = list(chain.from_iterable(a)), list(chain.from_iterable(b))  
+    length = len(a[0])  
+    summed = list(reversed([ num + chain_two[idx] for idx, num in enumerate(chain_one) ]))  
+  
+    for i in summed:  
+        tmp = []  
+        for _ in range(length):  
+            tmp.append(summed.pop())  
+        result.append(tmp)  
+  
+    return result  
+  
+def matrix_addition(a, b):  
+    return [[sum(xs) for xs in zip(ra, rb)] for ra, rb in zip(a, b)]
+```
