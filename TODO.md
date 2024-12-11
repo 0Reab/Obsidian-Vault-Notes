@@ -29,3 +29,22 @@
 	- [ ] Display stats
 	- [ ] Use weather and moon free api for data
 	- [ ] Image metadata read
+- [ ] Data structs and algos
+	- [ ] Data structs
+		- [ ] Arrays and lists
+		- [ ] Hash Tables
+		- [ ] Sets
+		- [ ] Stacks and Queues
+		- [ ] Trees
+		- [ ] Graphs
+		- [ ] Heaps
+		- [ ] Linked Lists
+	- [ ] Algorithms
+		- [ ] Sorting and searching
+		- [ ] Graph Algorithms
+		- [ ] Dynamic Programming
+		- [ ] Greedy Algorithms
+		- [ ] Divide and Conquer
+		- [ ] String algorithms
+		- [ ] Hashing and Caching
+		- [ ] Backtracking

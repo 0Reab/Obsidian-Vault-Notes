@@ -132,3 +132,8 @@ def matrix_addition(a, b):
 def matrix_addition(a, b):  
     return [[sum(xs) for xs in zip(ra, rb)] for ra, rb in zip(a, b)]
 ```
+
+``` python
+over_limit = lambda spent: True if max(spent) > 2000 else False
+# lambda if statement example
+```

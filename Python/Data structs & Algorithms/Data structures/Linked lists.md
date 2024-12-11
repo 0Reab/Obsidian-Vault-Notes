@@ -1,3 +1,8 @@
+![[Pasted image 20241206155240.png]]
+Why linked lists are great.
+When you want to add a value to the list at some index, you can utilize the pointers that point to that memory address of next node.
+Meaning that operation will be O(1).
+Whereas in regular lists, that will be O(n) because of the element shifting for each element after the inserted element.
 ![[Pasted image 20241107171559.png]]
 Linked lists are a data structure that have nodes (10, 20, 30) and null pointers at the end.
 Time complexity of this structure is O(n) which is linear, so in worst case you will go thru the whole data.
