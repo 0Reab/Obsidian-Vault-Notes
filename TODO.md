@@ -13,7 +13,11 @@
 - [x] Learn network services THM room
 	- [x] Finish room
 	- [x] Write notes
-
+- [ ] Create a massive wordlist for my language
+	- [ ] Scrape a real dictionary
+	- [ ] Create combinations with words, caps, nums, special chars, and alt chars a -> @
+	- [ ] Names, books, movies, proverbs, cities, places
+- [ ] criss cross algorithm
 - [x] Make a script to reconnect rev shell in case your clumsy ass drops it by miss clicking
 - [ ] Make linux privilege escalation tool in bash for ctf
 - [ ] JS rev shell or RCE in browser console? Experiment

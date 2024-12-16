@@ -46,3 +46,8 @@ rb - foo = boo if your cursors is at char 1
 yy - copy a line
 ctrl o o- insert on line under
 ctrl v, shft i, #, esc - comment out lines
+
+f * - wildcard forward to * char in line
+F * - --||-- but backwards
+t * 
+T * Same stuff just not on the char like append rather insert
