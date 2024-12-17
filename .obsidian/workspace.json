@@ -13,58 +13,15 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "TODO.md",
+                "file": "CTF/TryHackMe/AOC 2024/Day 5.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "TODO"
-            }
-          },
-          {
-            "id": "f7fecc280e325b0b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/Data structs & Algorithms/Data structures/Tree (General).md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Tree (General)"
-            }
-          },
-          {
-            "id": "74301e2218232652",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/Data structs & Algorithms/Data structures/Linked lists.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Linked lists"
-            }
-          },
-          {
-            "id": "d6a6d282fa79f658",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "vim/Useful.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Useful"
+              "title": "Day 5"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -216,14 +173,21 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "d6a6d282fa79f658",
+  "active": "d7d67a1cc146d364",
   "lastOpenFiles": [
-    "Hacking/Methodology/Web hax/XXE.md",
-    "Hacking/Methodology/Web hax/SQL injections.md",
-    "Hacking/Methodology/Wifi attacks.md",
+    "CTF/TryHackMe/AOC 2024/Day 1.md",
+    "CTF/TryHackMe/AOC 2024/Day 5.md",
+    "Hacking/Methodology/Web hax/Certificate missmanagement.md",
+    "CTF/TryHackMe/AOC 2024",
+    "Hacking/Methodology/Web hax/Web Sockets.md",
+    "Hacking/Methodology/Web hax/Race Condition.md",
     "TODO.md",
     "Python/Data structs & Algorithms/Data structures/Tree (General).md",
     "Python/Data structs & Algorithms/Data structures/Linked lists.md",
+    "vim/Useful.md",
+    "Hacking/Methodology/Web hax/XXE.md",
+    "Hacking/Methodology/Web hax/SQL injections.md",
+    "Hacking/Methodology/Wifi attacks.md",
     "Python/Data structs & Algorithms/Data structures/Arrays.md",
     "Networking/Wireshark.md",
     "Python/Data structs & Algorithms/Data structures/Hashmap.md",
@@ -242,18 +206,12 @@
     "Python/Data structs & Algorithms/Big O notation.md",
     "Pasted image 20241206140749.png",
     "Python/Data structs & Algorithms/Learning map.md",
-    "Python/Exercises/Getting cracked with Leetcode.md",
     "Python/Data structs & Algorithms",
     "Python/Data structs & Algorithms/Algorithms",
-    "Python/A.md",
-    "Hacking/Methodology/Web hax/Python Flask.md",
     "Pasted image 20241205175136.png",
     "Pasted image 20241205174350.png",
-    "CMD/Print contents of file.md",
     "Untitled.canvas",
     "Untitled 1.canvas",
-    "Python/Methods and Functions useful/Itertools.md",
-    "Python/JSON and rw IO ops.md",
     "Pasted image 20241126144850.png",
     "Python/Exercises/Leetcode",
     "Pasted image 20241125161328.png",
@@ -265,7 +223,6 @@
     "Hacking/Bug bounty",
     "Hacking/Methodology/Essentials",
     "Hacking/Methodology/Web hax",
-    "Hacking/Pentesting",
     "Untitled 3.canvas",
     "Untitled 2.canvas",
     "Networking/Untitled.canvas"

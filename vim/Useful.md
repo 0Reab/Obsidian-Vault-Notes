@@ -49,5 +49,5 @@ ctrl v, shft i, #, esc - comment out lines
 
 f * - wildcard forward to * char in line
 F * - --||-- but backwards
-t * 
+t *  ( like 'to' keyword for analogy, works with commands)
 T * Same stuff just not on the char like append rather insert
