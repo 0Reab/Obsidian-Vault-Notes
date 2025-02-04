@@ -31,18 +31,18 @@
 	- [ ] Use PostgreSql
 	- [ ] Tkinter ui
 	- [ ] Display stats
-	- [ ] Use weather and moon free api for data
+	- [x] Use weather and moon free api for data
 	- [ ] Image metadata read
 - [ ] Data structs and algos
 	- [ ] Data structs
-		- [ ] Arrays and lists
+		- [x] Arrays and lists
 		- [ ] Hash Tables
 		- [ ] Sets
 		- [ ] Stacks and Queues
 		- [ ] Trees
 		- [ ] Graphs
 		- [ ] Heaps
-		- [ ] Linked Lists
+		- [x] Linked Lists
 	- [ ] Algorithms
 		- [ ] Sorting and searching
 		- [ ] Graph Algorithms
@@ -52,3 +52,13 @@
 		- [ ] String algorithms
 		- [ ] Hashing and Caching
 		- [ ] Backtracking
+- [x] Create a web crawler for codewars challenge solutions
+	- [x] basic outline
+	- [x] implement selenium for dynamic js loading
+	- [x] refactor main function
+	- [x] modularize the code
+	- [ ] make tests
+	- [ ] make logs instead of printing
+	- [ ] proper readme
+- [ ] Create a massive recon tool
+	- [ ] 
