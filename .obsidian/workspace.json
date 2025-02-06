@@ -8,20 +8,35 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e152aff9fd381a6a",
+            "id": "6d5f2ceb2532b8e1",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Powershell/Naughty powershell.md",
+                "file": "Linux/Filling gaps in knowledge.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Naughty powershell"
+              "title": "Filling gaps in knowledge"
+            }
+          },
+          {
+            "id": "fe42b094d9c1781e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Linux/File system.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "File system"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -174,17 +189,22 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "e152aff9fd381a6a",
+  "active": "fe42b094d9c1781e",
   "lastOpenFiles": [
-    "Powershell/Reverse shell with Powershell.md",
+    "Linux/Filling gaps in knowledge.md",
+    "TODO.md",
+    "Linux/File system.md",
+    "Pasted image 20250206181256.png",
+    "Linux/General knowledge.md",
+    "answers.md",
     "Powershell/Naughty powershell.md",
+    "Powershell/Reverse shell with Powershell.md",
     "Powershell/Windows makes me miserable.md",
     "Hacking/Methodology/Essentials/Getting the shell.md",
     "Linux/Linux commands.md",
     "Hacking/Methodology/Enumeration and scanning/Linux enumeration.md",
     "Hacking/Methodology/Privilege escalation/bash SUID.md",
     "Blue team/Incident response.md",
-    "TODO.md",
     "Blue team",
     "Git/Basic introduction and usage.md",
     "Git",
@@ -201,11 +221,6 @@
     "Hacking/Methodology/Web hax/Certificate missmanagement.md",
     "CTF/TryHackMe/AOC 2024",
     "Hacking/Methodology/Web hax/Web Sockets.md",
-    "Hacking/Methodology/Web hax/Race Condition.md",
-    "Python/Data structs & Algorithms/Data structures/Linked lists.md",
-    "Hacking/Methodology/Web hax/XXE.md",
-    "Hacking/Methodology/Web hax/SQL injections.md",
-    "Hacking/Methodology/Wifi attacks.md",
     "Pasted image 20241211162037.png",
     "Pasted image 20241206155240.png",
     "Pasted image 20241206143838.png",
@@ -220,7 +235,6 @@
     "Python/Exercises/Leetcode",
     "Pasted image 20241125161328.png",
     "Pasted image 20241125161256.png",
-    "Pasted image 20241125161024.png",
     "Hacking/Methodology/Active directory",
     "Python/Data structs & Algorithms/Data structures",
     "CTF/BBP & VDP",

@@ -37,8 +37,8 @@
 	- [ ] Data structs
 		- [x] Arrays and lists
 		- [ ] Hash Tables
-		- [ ] Sets
-		- [ ] Stacks and Queues
+		- [x] Sets
+		- [x] Stacks and Queues
 		- [ ] Trees
 		- [ ] Graphs
 		- [ ] Heaps
@@ -57,8 +57,19 @@
 	- [x] implement selenium for dynamic js loading
 	- [x] refactor main function
 	- [x] modularize the code
-	- [ ] make tests
+	- [x] make tests
 	- [ ] make logs instead of printing
-	- [ ] proper readme
+	- [x] proper readme
 - [ ] Create a massive recon tool
-	- [ ] 
+	- [ ] screenshot available paths
+	- [ ] port scan
+	- [x] directory enumeration
+	- [ ] web stack profiling
+- [ ] Brush up on Linux
+	- [x] file system understanding
+	- [ ] networking binaries
+	- [ ] firewall configuration
+	- [x] hard links & soft links
+	- [ ] logging tools
+	- [ ] security tool
+- [ ] 
