@@ -45,3 +45,10 @@ for i in mycursor:
 	# ('Tim', 19, 1)
 	# name - age - id
 ```
+
+```sql
+SHOW TABLES;--
+DROP TABLE budget;--
+truncate myTable;-- # will delete all rows in table and reset the auto increment
+```
+all these statements will have no stdout if you don't iterate over the items like in the example.

@@ -137,3 +137,32 @@ def matrix_addition(a, b):
 over_limit = lambda spent: True if max(spent) > 2000 else False
 # lambda if statement example
 ```
+
+```python
+mycursor.execute('SELECT datum, opis FROM budget WHERE itemID = 9')  
+for i in mycursor:  
+    print(i)
+```
+
+```python
+# use of all() and any() builtins  
+# all() - returns True if all items return Truthy else False  
+# any() - return True if any of items return Truthy else False  
+# example under the hood:
+
+def all(iterable):  
+    for i in iterable:  
+        if not i:  
+            return False  
+    return True
+      
+def any(iterable):  
+    for i in iterable:  
+        if i:  
+            return True   
+    return False
+
+# usage
+while not all(len(x) == 4 for x in data):
+	# until all items in data are of length 4 run this block
+```
