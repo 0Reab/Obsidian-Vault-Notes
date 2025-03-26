@@ -32,7 +32,7 @@ This will return tuples.
 **Inserting**
 ```python
 mycursor.execute("INSERT INTO Person (name, age) VALUES (%s,%s)", ('Tim', 19))
-db.commit()
+db.commit() # dont forget this line otherwise nothing will be inserted.
 ```
 If you are familiar with C or string formatting, %s indicates a place where passed in tuple will be placing it's values in order.
 
