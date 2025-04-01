@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Python/Methods and Functions useful/id().md",
+                "file": "Python/Methods and Functions useful/Unpacking function args.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "id()"
+              "title": "Unpacking function args"
             }
           }
         ]
@@ -176,11 +176,12 @@
   },
   "active": "1db047604cc70662",
   "lastOpenFiles": [
-    "SQL/MySql/Basic queries and usage.md",
+    "Python/Pythonic Code.md",
+    "Python/Methods and Functions useful/Unpacking function args.md",
     "Python/Methods and Functions useful/id().md",
+    "SQL/MySql/Basic queries and usage.md",
     "Python/Methods and Functions useful/Matplotlib.md",
     "Untitled.md",
-    "Python/Pythonic Code.md",
     "SQL/SQL.md",
     "SQL",
     "SQL/MySql/Setting up MySql.md",
@@ -203,7 +204,6 @@
     "Bash/List of Useful features/Redirecting stdout and stderr.md",
     "Bash/List of Useful features/Reading user input one liner.md",
     "Bash/List of Useful features/Parsing switches.md",
-    "Bash/List of Useful features/Paralelization.md",
     "Pasted image 20250206181256.png",
     "Blue team",
     "Git",
