@@ -1,5 +1,4 @@
 ```powershell
-```powershell
 $VrtAlloc = @"
 using System;
 using System.Runtime.InteropServices;

