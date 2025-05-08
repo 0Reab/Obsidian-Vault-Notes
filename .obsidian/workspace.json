@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Hacking/Methodology/Web hax/CSRF.md",
+                "file": "Hacking/Methodology/Web hax/Server-Side vulnerabilities.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "CSRF"
+              "title": "Server-Side vulnerabilities"
             }
           }
         ]
@@ -176,8 +176,10 @@
   },
   "active": "f2282a091afaba50",
   "lastOpenFiles": [
-    "Hacking/Methodology/Web hax/SSRF.md",
+    "Hacking/Methodology/Web hax/Path traversal.md",
+    "Hacking/Methodology/Web hax/Server-Side vulnerabilities.md",
     "Hacking/Methodology/Web hax/CSRF.md",
+    "Hacking/Methodology/Web hax/SSRF.md",
     "Algorithms/Binary search.md",
     "Algorithms/Bubble sort.md",
     "Algorithms/Linear search.md",
@@ -202,8 +204,6 @@
     "C/Boilerplate hello world.md",
     "C/Compare strings ==.md",
     "C/Strings and chars.md",
-    "C/If statements.md",
-    "Python/Optimization tips.md",
     "SQL",
     "SQL/MySql",
     "Pasted image 20250206181256.png",
