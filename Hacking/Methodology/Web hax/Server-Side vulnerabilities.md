@@ -117,3 +117,6 @@ Even if most of the users do not comfort the standard more often than not import
 During auditing, check if the website discloses usernames/emails by checking their profile.
 Even if actual contents of the profile is hidden, name used in profile is often the same as username, also check http responses for email disclosure.
 
+Username enumeration, it is possible to gather lists of usernames if the website indirectly discloses the existence of a username.
+This can be done via attempt to register an user, and getting an error saying that the username is taken, or similar methods to this.
+
