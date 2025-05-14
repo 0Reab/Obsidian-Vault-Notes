@@ -200,3 +200,35 @@ Or even better, utilize it to execute shell commands via GET request.
 **LAB** - Upload a php script that will retrieve contents of a file `/home/carlos/secret`. After uploading the php script, because it's meant to be image uploader, the broken image appears.
 If we follow the URL of said image, we access the file contents.
 
+In practice you will likely find a defense against file upload, but they could still have some flaws in the mechanisms.
+
+When submitting html forms the data is usually sent in `POST` request wit content type as `application/x-www-form-url-encoded`
+This is fine for small amounts of data, such as strings you enter in input fields.
+But for larger data such as a PDF file or else, content type as `multipart/form-data` is more suitable.
+
+```http
+POST /images HTTP/1.1
+Host: normal-website.com
+Content-Length: 12345
+
+Content-Type: multipart/form-data; 
+
+boundary=---------------------------012345678901234567890123456 ---------------------------012345678901234567890123456
+Content-Disposition: form-data; name="image"; filename="example.jpg"
+Content-Type: image/jpeg
+[...binary content of example.jpg...] ---------------------------012345678901234567890123456
+
+Content-Disposition: form-data; name="description" This is an interesting description of my image. ---------------------------012345678901234567890123456
+Content-Disposition: form-data; name="username" 
+wiener ---------------------------012345678901234567890123456--
+```
+
+In this example http request we send multiple types of data, each segment has it's own header `Content-Type` and `Content-Disposition`.
+These are used to tell the server `MIME type` of data being sent.
+Mime type -> `Multipurpose Internet Mail Extension` and it's a standard that indicates format of a file.
+
+One way web apps defend against file upload vulns is to check those headers `Content-Type` and see if it matches an expected MIME type.
+Problems can arise if the server implicitly trusts those headers and does not perform further checks.
+This can be bypassed by modifying the headers.
+
+**LAB** - Exfiltrate data from `/home/carlos/secret`, 
