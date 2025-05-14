@@ -120,3 +120,83 @@ Even if actual contents of the profile is hidden, name used in profile is often 
 Username enumeration, it is possible to gather lists of usernames if the website indirectly discloses the existence of a username.
 This can be done via attempt to register an user, and getting an error saying that the username is taken, or similar methods to this.
 
+#### Bypassing two-factor authentication
+
+Sometimes two-factor auth can be bypassed if it's simply not implemented correctly.
+For example if you first enter the password to login and then you are prompted for 2fa it might be that you are already in a logged in state.
+And if the app doesn't check that, you could bypass the 2fa by trying to access "logged in only pages".
+
+**LAB** - access carlos login via 2fa bypass. solved by using your own account to login and see the url you end up on after 2fa, then login as carlos and skip over 2fa by going to the found url.
+
+#### SSRF - server side request forgery
+
+This vulnerability involves an application that is vulnerable to sending requests to unintended places.
+Such as external, or internal, that could be a malicious hosted server or internal network and services respectively.
+
+For example this will demonstrate and application vulnerable to SSRF, and it will exploit API calls done via HTTP to access other content.
+That content is hosted on that API endpoint, and it's local to that machine, in theory we could use localhost, or 127.0.0.1 to possibly bypass security measures in place.
+
+```http
+POST /product/stock HTTP/1.0
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 118
+stockApi=http://stock.weliketoshop.net:8080/product/stock/check%3FproductId%3D6%26storeId%3D1`
+```
+
+We will modify the API call in the body of HTTP request.
+
+```http
+stockApi=http://localhost/admin
+```
+
+If this content is usually guarded by authorization this request is different because it originates from the local machine.
+
+The reasons why this vulnerability can occur are:
+- Access control functionality sits in a component that is in front of the application server.
+- For disaster recovery purposes, the app might allow administrative access without logging in to any user from the local machine, this assumes that only trusted users have access to it.
+- The admin interface is on a different port, and is not directly reachable by users.
+
+In these kinds of scenarios where requests from local machine are handled differently than ordinary request often make SSRF vulnerabilities critical.
+
+**LAB** - Like in the example, the API request can be modified to go to `localhost/admin`, but after we try to access that url the normal way and delete an user, it will only work thru that API, these things are "secured" and only available to localhost, thus we go back again to the API call and modify the URL to the newly discovered url request to delete the user.
+
+
+Now there could be other backend systems that are vulnerable to these attacks.
+They could be only protected by network topology, those systems could contain sensitive functionality that can be accessed without authentication.
+So for example we could try and access them by trying IP addresses such as 192.168.1.4
+
+**LAB** - Similar to the previous lab, but in this one the goal was to enumerate the API call IP address to eventually find admin panel and do the same to delete the user.
+
+
+#### File upload vulnerabilities
+
+Is a vulnerability that allows the attacker to upload a file to the server.
+This happens when the application has insufficient protection again users uploading files of different type, size, name or contents.
+Eventually those malicious files if accessed by the server via http request from the user, could trigger it's execution.
+
+How does this vulnerability arise?
+
+Well given how dangerous this vulnerability can be, it can happen that the defense against it is flawed:
+- Blacklisting, it's possible to bypass with discrepancies in file extension like image.jpg.php or for an obscure filetype that can be dangerous.
+- Only verifying properties of the file requests, they can modified.
+- Inconsistent validation across the application.
+
+Leveraging file upload to get reverse shell.
+
+If the website allows upload of arbitrary files and is setup to execute script files, such as php, java, python.
+It is possible to achieve the reverse shell.
+
+For example this one liner can read contents of a file.
+```php
+<?php echo file_get_contents('/path/to/target/file'); ?>
+```
+
+Or even better, utilize it to execute shell commands via GET request.
+```php
+<?php echo system($_GET['command']); ?>
+```
+`GET /example/exploit.php?command=id HTTP/1.1`
+
+**LAB** - Upload a php script that will retrieve contents of a file `/home/carlos/secret`. After uploading the php script, because it's meant to be image uploader, the broken image appears.
+If we follow the URL of said image, we access the file contents.
+
