@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Hacking/Methodology/Web hax/Web LLM attacks.md",
+                "file": "Hacking/Methodology/Web hax/Clickjacking.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Web LLM attacks"
+              "title": "Clickjacking"
             }
           }
         ]
@@ -181,8 +181,9 @@
   },
   "active": "4d0feb8052e19683",
   "lastOpenFiles": [
-    "Hacking/Methodology/Web hax/Server-Side vulnerabilities.md",
     "Hacking/Methodology/Web hax/Web LLM attacks.md",
+    "Hacking/Methodology/Web hax/Clickjacking.md",
+    "Hacking/Methodology/Web hax/Server-Side vulnerabilities.md",
     "Hacking/Methodology/Web hax/Path traversal.md",
     "Hacking/Methodology/Web hax/CSRF.md",
     "Hacking/Methodology/Web hax/SSRF.md",
@@ -208,7 +209,6 @@
     "C/For loops.md",
     "C/Arrays.md",
     "C/Boilerplate hello world.md",
-    "C/Compare strings ==.md",
     "SQL",
     "SQL/MySql",
     "Pasted image 20250206181256.png",
