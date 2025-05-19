@@ -232,3 +232,86 @@ Problems can arise if the server implicitly trusts those headers and does not pe
 This can be bypassed by modifying the headers.
 
 **LAB** - Exfiltrate data from `/home/carlos/secret`, 
+
+#### OS command injection
+
+This vulnerability type is very critical.
+Often it leads to full server compromise and later one pivot to the other servers by abusing trust relationships to pivot to other systems.
+
+After you find a OS command injection vulnerability.
+It's useful to enumerate the machine a little bit before proceeding.
+
+| Purpose of command    | Linux         | Windows         |
+| --------------------- | ------------- | --------------- |
+| Name of current user  | `whoami`      | `whoami`        |
+| Operating system      | `uname -a`    | `ver`           |
+| Network configuration | `ifconfig`    | `ipconfig /all` |
+| Network connections   | `netstat -an` | `netstat -an`   |
+| Running processes     | `ps -ef`      | `tasklist`      |
+
+For example, we have a shopping application.
+`https://insecure-website.com/stockStatus?productID=381&storeID=29`
+
+In order to fulfill our request the app interacts with some legacy systems, and it does that by running a shell command with arguments from http request.
+`stockreport.pl 381 29`
+
+The app does not have any defense against command injection.
+`& echo aiwefwlguh &`
+If this payload is submitted in the `productID` parameter.
+`stockreport.pl & echo aiwefwlguh & 29`
+
+As a result we get the following output from command execution.
+`Error - productID was not provided aiwefwlguh 29: command not found`
+
+By using `&` we increase the chance of commands running after the intended command is executed.
+
+**LAB** - Command injection in check stock post request, only worked with payload `|whoami` - depending on the backend executing the command.
+There can be a specific way to execute commands, thus fuzzing can be a great idea in these situations.
+
+#### SQL Injections
+
+This type of vulnerability allows the attacker to access the database by queries.
+It can lead to data leaks of other users or any data in that database.
+Potentially also compromise of the underlying server if the SQL can be escalated.
+Additionally DoS attacks are possible.
+
+SQL injections have been covered in other notes.
+
+But just a quick recap, we can try and cause an error by inserting quotes.
+Try time based attack by using sleep functionality.
+Boolean based, for login bypass.
+
+For example given an vulnerable web app.
+`https://insecure-website.com/products?category=Gifts`
+
+This URL requests this SQL query.
+`SELECT * FROM products WHERE category = 'Gifts' AND released = 1`
+
+We can assume that the released parameter as 0 is for unreleased products.
+
+If the app had no defenses against SQLi, we could try and comment out the last part of the query.
+Using the `--` comment indicators.
+
+`SELECT * FROM products WHERE category = 'Gifts'--' AND released = 1`
+
+We can also do the bool attack.
+`https://insecure-website.com/products?category=Gifts'+OR+1=1--`
+
+This will cause every category to be displayed, the reason why is the bool payload will always evaluate to true, thus return everything.
+
+*Warning*
+Take care when injecting the condition `OR 1=1` into a SQL query. Even if it appears to be harmless in the context you're injecting into, it's common for applications to use data from a single request in multiple different queries. If your condition reaches an `UPDATE` or `DELETE` statement, for example, it can result in an accidental loss of data.
+
+**LAB** - Exploit WHERE clause, `SELECT * FROM products WHERE category = 'Gifts' AND released = 1`
+Solution - `filter?category=' OR 1=1--` After failing miserably, I realized that the solution is meant to be empty category, and with OR statement that evals to true.
+Thus returning everything.
+
+Bypassing authentication logic using SQLi.
+`SELECT * FROM users WHERE username = 'wiener' AND password = 'bluecheese'`
+
+In this instance of login form where sql query is performed.
+We can attempt to login as an user `administrator` and omit the password parameter.
+
+`SELECT * FROM users WHERE username = 'administrator'--' AND password = ''`
+
+**LAB** - login as admin using SQLi - 
