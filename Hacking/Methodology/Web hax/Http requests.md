@@ -1,3 +1,5 @@
+HTTP is `request-response` protocol.
+
 ```bash
 GET    # retrieve data
 POST   # send data, does not modify state of server

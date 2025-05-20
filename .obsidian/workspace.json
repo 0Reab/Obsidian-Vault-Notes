@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Hacking/Methodology/Web hax/Clickjacking.md",
+                "file": "Hacking/Methodology/Web hax/WebSockets.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Clickjacking"
+              "title": "WebSockets"
             }
           }
         ]
@@ -181,8 +181,11 @@
   },
   "active": "4d0feb8052e19683",
   "lastOpenFiles": [
-    "Hacking/Methodology/Web hax/Web LLM attacks.md",
+    "Hacking/Methodology/Web hax/Http requests.md",
+    "Hacking/Methodology/Web hax/WebSockets.md",
+    "Hacking/Tools/Burpsuite.md",
     "Hacking/Methodology/Web hax/Clickjacking.md",
+    "Hacking/Methodology/Web hax/Web LLM attacks.md",
     "Hacking/Methodology/Web hax/Server-Side vulnerabilities.md",
     "Hacking/Methodology/Web hax/Path traversal.md",
     "Hacking/Methodology/Web hax/CSRF.md",
@@ -206,9 +209,6 @@
     "C/Memory/Stack.md",
     "C/Memory/Heap.md",
     "C/Memory/Pointers.md",
-    "C/For loops.md",
-    "C/Arrays.md",
-    "C/Boilerplate hello world.md",
     "SQL",
     "SQL/MySql",
     "Pasted image 20250206181256.png",
