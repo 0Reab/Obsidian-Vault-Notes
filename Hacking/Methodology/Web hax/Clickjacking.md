@@ -72,10 +72,94 @@ Also `z-index`  is a and indicator of z axis, what should be on top, the higher 
         z-index: 1;
     }
 </style>
-<div>Test me</div>
+<div>Click me!!!</div>
 <iframe src="https://0a190054039c9af780470dd8002600bc.web-security-academy.net/my-account"></iframe>
 ```
 
 So we have an iframe and a div.
 They are stylized with CSS, iframe is positioned relatively and has got a z-index higher than div underneath it.
 Div is placed with lower z-index value and is just a "fake button" that is positioned where the iframe button appears to be.
+
+As this process of manually creating a clickjacking page can be tedious.
+There are tools to help with that, one of them is `Clickbandit` in burpsuite.
+
+**Clickjacking prefilled form input**
+
+Some web apps require filling in forms using GET requests before form submission.
+As GET values form part of the URL, the URL can be modified to attackers preference.
+
+**LAB** - Make the user change their email by clickjacking with prefilled forms.
+`web-security-academy.net/my-account?id=wiener&email=hombre@user.net`
+
+We can use the prefill in GET request to setup an email we want to use upon clicking the change email button.
+It wasn't explicitly fetching GET request with email parameter, but we crafted it and it works.
+
+*In case you are having trouble with any labs, try putting "Click me!!!" in the div*
+
+#### Frame busting scripts
+
+Because clickjacking is possible if the website can be framed.
+Here are some measures that are taken to prevent framing.
+
+These protections are `client-side` and work within the `browser`.
+They are intended to break the scripts and detect frames or when a website is not the topmost window.
+
+- check if the current app is the top most window.
+- make all frames visible.
+- prevent clicking on invisible frames.
+- intercept and flag potential clickjacking 
+
+Because these techniques of defense are browser & platform specific, they can be circumvented.
+Since frame busters are JS, either browsers security might prevent them from running or lack JS support altogether.
+
+One bypass technique is to use `HTML5 sandbox` attribute.
+When it's set with:
+- `allow-forms` (added)
+- `allow-scripts` (added)
+- `allow-top-navigation` (omitted)
+
+Then the frame buster defense is ineffective because the iframe cannot check if it's a top window or not.
+
+```html
+<iframe id="victim_website" src="https://victim-website.com" sandbox="allow-forms"></iframe>
+```
+
+Bot `allow-forms` & `allow-scripts` allow those actions in the iframe.
+But top-level navigation is disabled, this allows the functionality within the targeted site while still bypassing frame busting. 
+
+**LAB** - Clickjack the user to change the email, website is protected by frame buster.
+
+Solved like the previous lab by using a GET parameter with prefilled form for the email, and just added `sandbox="allow-forms` into the iframe tag, to bypass frame busting.
+
+#### Clickjacking with a DOM XSS attack
+
+Clickjacking has been historically used for boosting likes on a social media post for example.
+But it can be used in tandem with other vulnerabilities for greater impact.
+
+If XSS vulnerability has been discovered and clickjacking is possible, it can be combined to execute XSS when present in iframe.
+
+`XSS` - cross site scripting (injecting JS into input fields causing it to ex)
+`DOM` - Document Object Model - (JavaScript object) (API for HTML and XML) Web browser presents structure of a document (dynamically loaded and what else) (tree data structure).
+
+Therefore DOM XSS works by modifying the DOM environment in your browser.
+So client-side environment runs in an "unexpected" way.
+
+
+**LAB** - This lab contains an XSS vuln triggered by a click, make a clickjacking decoy to click the button to call the print()
+
+`https://.web-security-academy.net/feedback?name=%3Cimg%20src=1%20onerror=print()%3E&email=test@gmail.com&subject=what&message=omg`
+
+This payload has been constructed by observing an feedback form, using it we formulate a `GET` request URL using the form fields.
+The field `name` contains an broken image html tag with JS, it is executed upon form submission.
+
+This can be `discovered` by trying to insert HTML elements such as `H1` (header) tags into the filed and submitting the form.
+H1 is rendered as such upon submitting.
+
+#### Multistep clickjacking
+
+In some cases the attacker might need the user to perform multiple actions to achieve the goal.
+For example if you are ordering something from a store, you need to add an item to the cart first.
+
+These actions can be implemented by using multiple divisions or iframes (`<div> & <iframe>`), they require precision to be effective and stealthy.
+So basically, stacking div elements and iframes to make more user actions possible.
+
