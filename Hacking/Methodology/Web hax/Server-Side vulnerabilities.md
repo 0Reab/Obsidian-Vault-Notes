@@ -233,6 +233,10 @@ This can be bypassed by modifying the headers.
 
 **LAB** - Exfiltrate data from `/home/carlos/secret`, 
 
+Additionally files can have magic **bytes**.
+Those bytes at the beginning of the file are standardized and indicate if the file is what MIME type it says it is.
+Obviously this is just a standard for filetypes, but it can be used to bypass a file upload defense.
+
 #### OS command injection
 
 This vulnerability type is very critical.
