@@ -193,10 +193,127 @@ And backend that maps file extensions to MIME types is `not case sensitive`.
 
 This could lead to code execution.
 
+
 List of other techniques:
 - Multiple extensions - `exploit.php.jpg` could be read as either php/jpg.
 - Trailing characters - `exploit.php.` characters could be ignored or stripped, causing blacklist to fail on a case. `.php != .php.`
 - URL encoding - `exploit%2Ephp` for dots & slashes - if the filename is decoded after validation it will bypass blacklist, (try double URL encoding too). 
-- Semicolons & null byte - `exploit.php;.jpg` & `exploit.php;%00.jpg` if the server validates filenames in low-level functions C/C++ then (; & %00) can cause problems.
+- Semicolons & null byte - `exploit.php;.jpg` & `exploit.php%00.jpg` if the server validates filenames in low-level functions C/C++ then (; & %00) can cause problems.
 - Multibyte Unicode chars - `exploit\xc0\x2ephp` bypasses validation, server decodes and normalizes malformed characters into a dot = `exploit.php` (you smuggle a dot).
 
+
+Other defenses include filename stripping to prevent execution.
+If not done recursively, can be bypassed, just like in path traversal obfuscation.
+`exploit.p.phphp` = `exploit.php`
+
+**LAB** - exploit file upload functionality utilizing obfuscation technique to bypass defense.
+Null byte allows upload of php script.
+
+```php
+<?php echo file_get_contents('/home/carlos/secret'); ?>
+```
+
+
+#### Flawed validation
+
+In a case where the web app is expecting an image for file upload.
+Implicitly trusting `Content-Type` header is not going to bode well.
+
+Because in this context file type is image, the server could try to validate the file by checking image dimensions.
+Php file will not have this property.
+
+Additionally every jpg has first magic bytes that are the same.
+`FF D8 FF`
+
+This is more robust way of validating file type.
+But this can still be modified using tools such as `ExifTool` to have code withing metadata.
+This is called `polyglot web shell`.
+
+**LAB** - exfiltrate contents of a file, using file upload and polyglot web shell.
+	`exiftool -Comment='<?php echo "START " . file_get_contents("/home/carlos/secret") . " END"; ?>' test.png -o payload.php`
+
+This formatted string will make it easy to find output of secret file, among all the binary of the image.
+
+
+#### Race conditions
+
+**Race condition**
+As the name suggests, it concerns racing as in time aspect of it and condition as in logic aspect.
+For example, a light that is controlled by two light switches, the position of a light switch becomes irrelevant.
+
+*It is a unexpected result that occurs when behavior of a system depends on a sequence or timing of events.*
+
+Most modern frameworks are hardened against these attacks.
+They:
+- Place files into` sandboxes / temporary` paths.
+- `Randomize filenames` to prevent file overwrite.
+- `Validate` it, and transfer to destination when it safe to do so.
+
+But sometimes developers implement their own processing of file uploads.
+This is a complex tasks it can also introduce race conditions which can enable the attacker to `completely bypass` even the most robust validation.
+
+In other cases websites upload files directly to the main filesystem and if they fail validation they are deleted.
+This typically happens in apps that utilize `anti-virus` software.
+The file may exist for a fraction of a second on the server but that can be enough.
+
+These vulnerabilities are subtle and hard to test in `black-box` testing.
+Unless you find a way to `leak relevant source code`.
+
+#### Race conditions in URL-based uploads
+
+Similar vulnerability can occur in URL-based uploads.
+In this case the server has to fetch the file and create a `local copy` before it can perform any validation.
+
+As the file is loaded using `HTTP` the frameworks built in mechanisms for validating files will `not kick in`.
+Instead developers are left to `manually develop` their process of validation and temporary storage of the file.
+This may not be as secure.
+
+If the file is uploaded to a directory with a randomized name, in theory it should be `impossible` to exploit race conditions.
+The reason being, you cannot request your file and execute it.
+
+But in reality, if the directory name is randomized by a `pseudo-randomizing` function like PHP's `uniqid()`.
+It can potentially be brute forced.
+
+To make this attack easier, you can extend the `time` it takes to upload the file.
+Allowing you to brute force the directory name.
+If the file is processed in chunks, you can take advantage of that and have your `payload the the beginning`, followed by large number of `padding bytes`.
+
+
+#### Exploiting file upload without RCE
+
+As we looked into `RCE` as an impact of file upload, there are other ways of exploiting file upload.
+
+You may be able to upload scripts via `HTML` or `SVG` files for `client-side attacks` using `<script>` tags to deliver  `XSS` payloads.
+
+Note, due to `same-origin` policy restrictions, this will only work if the content is served from the same origin to which you upload it.
+
+In a case where all else fails.
+You can try exploiting file parsing or processing.
+For example `XML-based` files, like `.doc` or `.xls` this may be potential vector to `XXE` attack (external entity injection).
+
+
+#### PUT Request
+
+It's worth nothing that some web apps are configured to support `PUT` requests.
+If appropriate defenses are not in place, this can provide a method of uploading files to the server even if upload function isn't available via the `web interface`.
+
+```http
+PUT /images/exploit.php HTTP/1.1 
+Host: vulnerable-website.com 
+Content-Type: application/x-httpd-php 
+Content-Length: 49 
+
+<?php echo file_get_contents('/path/to/file'); ?>
+```
+
+*TIP*
+You can try sending `OPTIONS` requests to different endpoints to see if any of them declare a support for the `PUT` method.
+
+#### Prevention of file upload vulnerabilities
+
+Allowing file upload is commonplace and can be done in a safe manner if all of practices are followed:
+- `Whitelist` - check file extension against a whitelist.
+- `Substrings` - make sure that the filename does not contain any substrings that indicate path traversal.
+- `Renaming` - to avoid collision with existing filenames to avoid overwriting files.
+- `Temp` - write files to filesystem only after full validation, before that they remain in temporary storage.
+- `Framework` - use established framework for file upload if possible, rather than implementing your own.
