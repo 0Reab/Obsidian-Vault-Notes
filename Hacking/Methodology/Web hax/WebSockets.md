@@ -63,3 +63,44 @@ Modifying WebSocket handshake via Burp repeater:
 - If you chose to `clone` or `reconnect` - you will see detailed `handshake request` - which you can edit before performing.
 - Click `connect`, it will attempt the configured handshake - if the connection is successful you can use this to send new messages in Burp repeater.
 
+
+#### Security vulnerabilities
+
+In theory any web vulnerability can arise in WebSockets:
+- User input could be processed unsafely - leading to `SQL` injections or `XML` external entity injection.
+- Blind vulnerabilities reached thru WebSockets might only be detectable using `OAST` techniques. (out-of-band application security testing). Using external servers where otherwise vulnerability is invisible.
+- If attacker controlled data is sent to other users, it may lead to `XSS` or other client-side vulnerabilities.
+
+
+#### Manipulating WebSocket messages to exploit vulnerabilities 
+
+Majority of input-based vulnerabilities in WebSocket messages can be exploited by tampering with their contents.
+For example, we have a messaging web application.
+
+It uses WebSockets to send messages between browsers and servers.
+```json
+{"message":"Hello Carlos"} # sent from you to server
+```
+
+And on the other end, the user renders the message. The `<td>` - table data - is an html tag and it defines a data cell in a table.
+```html
+<td>Hello Carlos</td> <!-- sent from server to recipients browser -->
+```
+
+In this example, given no input processing or defense is in place, we can send `PoC XSS` payload. (Proof of concept)
+```json
+{"message":"<img src=1 onerror='alert(1)'>"}
+```
+
+**LAB** - Use WebSocket messages to send an `alert()` pop up in agents browser, the messages are in a live chat and viewed in real-time.
+If you are you using burpsuite community edition (the free one) you will not be able to intercept WebSocket messages, a great alternative is `Caido`.
+It even supports more features that are limited or missing in burp.
+
+#### Manipulating handshakes
+
+Some design flaws can only be found in WebSocket handshake:
+- `Trust in HTTP headers` - security decisions based on http headers such as `X-Forwarded-For`.
+- `Flawed Session handling` - generally session context of a handshake will determine the context of WebSocket messages.
+- `Custom HTTP header` - New attack surface introduced by a custom header.
+
+**LAB** - Same as previous lab, but this one has an aggressive but flawed `XSS` protection.  
