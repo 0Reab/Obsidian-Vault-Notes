@@ -170,3 +170,258 @@ And as mentioned add terms relevant to the application's functionality and your 
 
 #### Finding hidden parameters
 
+While doing API recon you might find undocumented parameters.
+- Burp intruder allows you to use a wordlist of common parameter names to add/replace parameters, make sure to use names that are relevant to your application.
+- `The Param miner BApp` can test with 65,536 parameters per one request. It automatically guesses names that are relevant based on info from scope.
+- Content discovery tool, enables you to discover that isn't linked to visible content that you can browse to, including parameters.
+
+#### Mass assignment vulnerabilities
+
+Auto-binding can cause hidden parameters.
+It happens when framework binds parameters to fields on an internal object.
+Mass assignment, can support parameters that were never intended to be processed by the developer.
+
+#### Identifying hidden parameters
+
+Because mass assignment creates parameters from objects (JSON).
+We can `derive` the `parameters` from objects returned by API.
+
+For example `PATCH /api/users/` updates the username and email with the following JSON.
+```json
+{
+	"username": "wiener",
+	"email": "wiener@example.com"
+}
+```
+
+And `GET /api/users/123` returns:
+```json
+{
+	"id": 123,
+	"name": "John Doe",
+	"email": "john@example.com",
+	"isAdmin": "false" 
+}
+```
+
+This may indicate that the parameters `id` and `isAdmin` are bound to internal user object alongside the updated username and email parameters.
+
+#### Testing mass assignment vulnerability
+
+As previously discovered user object has id and admin value.
+We can try and add the admin parameter to our `PATCH` request and see how the application behaves with valid data such as "false" and invalid data like "foo".
+
+If we cause no errors with "false", and errors show up with "foo" it may be possible to allow our user to become and admin.
+We will resend the request to update our username/email, and modify the API request.
+`PATCH /api/users/`
+```json
+{
+	"username": "wiener",
+	"email": "wiener@example.com",
+	"isAdmin": "true"
+}
+```
+
+Via GET request we can verify if the object updated and test our privileges and access.
+
+**LAB** - Exploit mass assignment vulnerability to buy Lightweight l33t Leather Jacket.
+
+Solution -  Update the product object's discount percentage value by using POST method on the API.
+
+#### Preventing vulnerabilities in APIs
+
+When designing APIs make sure to:
+- Secure the documentation if the API is not public.
+- Ensure the documentation is up to date for your testers.
+- Apply a whitelist of allowed HTTP methods.
+- Validate the content type of each request/response is expected.
+- Use generic error messages to not give away information.
+- Use protective measure on all API versions not just for current.
+
+To prevent mass assignment vulnerability use a allowlist for properties that users can edit and blocklist for sensitive properties.
+
+#### Server-side parameter pollution
+
+On some applications that utilize internal APIs we can try and interact with them by polluting our requests.
+This vulnerability occurs when the application embeds `user input` in a request to an `internal API` without adequate encoding.
+This means that the attacker could manipulate or inject parameters.
+
+This could lead to:
+- Override existing parameters.
+- Modify the application behavior.
+- Access unauthorized data.
+
+`Any user input` can be used to test this vulnerability.
+- query parameters
+- form fields
+- headers
+- URL path parameters
+
+*Note*
+This vulnerability is sometimes called HTTP parameter pollution, but this is also the name of a WAF bypass technique.
+And there is server-side prototype pollution which sounds similar but it's not related to our vulnerability.
+So for clarity's sake we are going to refer to current vuln as `server-side parameter pollution`.
+
+#### Testing server-side parameter pollution - query string
+
+To test query string we can inject characters such as `&`, `=`, `#` and observe the response.
+
+For example, given an app the searches for users based on username.
+Upon searching the following request is sent.
+```http
+GET /userSearch?name=peter&back=/home
+```
+
+To return the information, the server requests data from internal API with:
+```http
+GET /users/search?name=peter&publicProfile=true
+```
+
+#### Truncating query strings
+
+You can attempt to truncate the server-side request using URL encoded `#`.
+For ease of parsing of the response, you can also add a string after it.
+
+For example here is the modified URL that you request:
+```http
+GET /userSearch?name=peter%23foo&back=/home
+```
+
+And the front-end will access this URL:
+```http
+GET /users/search?name=peter#foo&publicProfile=true
+```
+
+*Note*
+It is necessary to URL encode the #.
+Otherwise the front-end will interpret it as a `fragment identifier`. 
+And it won't be passed in to internal API.
+
+**Fragment identifier** - in short as fragid, is used in URI that denotes part of the document to retrieve like header or else.
+URI vs URL - uniform resource identifier vs uniform resource locator.
+The former concerns of type and latter concerns of location.
+
+The response of truncated request can indicate if truncation was successful.
+
+If we receive an `error`, it is likely that the application treated "foo" as part of a name.
+If we receive the `name`, it's likely that the truncation was successful.
+
+So if we are able to truncate the server-side request, it could be possible to lookup the non public users by truncating that parameter.
+
+#### Injecting invalid parameters
+
+You can use `&` character to try and add another parameter to the request.
+
+For example:
+```http
+GET /userSearch?name=peter%26foo=xyz&back=/home
+```
+
+Then the server-side API:
+```http
+GET /users/search?name=peter&foo=xyz&publicProfile=true
+```
+
+And observe the response.
+If the response is unchanged, it could indicate that the app simply ignored the parameter.
+It is necessary to test further to paint the whole picture.
+
+#### Injecting valid parameters
+
+If you are able to modify the query string, you can attempt to add a valid parameter to the server-side request.
+*Related section - Finding hidden parameters*
+
+For example, if you've found email parameter:
+```http
+GET /userSearch?name=peter%26email=foo&back=/home
+```
+
+And the server-side API:
+```http
+GET /users/search?name=peter&email=foo&publicProfile=true
+```
+
+Review the response.
+
+#### Overriding existing parameters
+
+To confirm if the app is vulnerable to server-side parameter pollution we can try to override the `original parameter`.
+
+For example, we can try and duplicate the parameter:
+```http
+GET /userSearch?name=peter%26name=carlos&back=/home
+```
+
+And for the internal:
+```http
+GET /users/search?name=peter&name=carlos&publicProfile=true
+```
+
+Now the two parameters, both called `name` can be interpreted differently depending on the application technologies:
+- `PHP` - would take the last parameter - `carlos`.
+- `ASP.NET` - would combine both parameters - `peter,carlos` - likely causing an error. (As most `.net` things this Microsoft's web framework).
+- `Node.js` - would take the first parameter - `peter`.
+
+If you are able to override the parameter, you can try setting your name as `administrator`.
+This may allow you to `log in` as the administrator user. 
+
+**LAB** - Exploit server side parameter pollution in query string. Log in as administrator and delete user Carlos.
+
+---
+*Solution and rant*
+Okay, hate to admit it but I'm an idiot.
+As mentioned multiple times, query strings need to be URL encoded to work.
+I assumed that the dev tools automatically URL encode http body because as I first looked at the request "&" and "=" were not encoded.
+So I figured it encodes upon sending it.
+Big blunder.
+
+Next time, no assumptions for such a critical part, better redundant and safe than being as deadly as a butter knife.
+
+After fiddling with the query strings of login and password reset functionality, and failing to see any meaningful way forward based on error messages.
+What I definitively missed is, password reset JS file that had some crucial information.
+
+You can have syntax highlighting in the browser dev tools in "Debugger" section and browse thru all the scripts.
+
+In that script, there is a mention of a path with token parameter.
+```javascript
+window.location.href = `/forgot-password?reset_token=${resetToken}`;
+```
+
+Visiting this URL leads to a password reset for the account of a given token.
+This token can be obtained buy injecting parameters in the reset password post request.
+As the body contains:
+`csrf-token&username=administrator`
+This returns some data, such as hidden email.
+
+After trying to append parameters and truncate them with `& and #` the errors seem to indicate there are `fields` that we can specify.
+This request `csrftoken&username=administrator#test` truncates the parameters and causes:
+```json
+{"error": "Field not specified."}
+````
+And for the language barrier, ''field" would mean literal 'field' as a parameter name.
+Here is the bruteforcing moment, or if you thing a bit, we can utilize our recon skills and try things such as:
+- `username`
+- `email`
+- `reset_token`
+
+All of those parameters returned their respective data when assigned to `field`.
+And the token can be used to reset the password and complete the lab.
+`csrf-token&username=administrator&field=reset_token`
+
+```json
+{
+	"type": "ClientError",
+	"code": 400,
+	"error": "Invalid field."
+}
+```
+
+Okay and to summarize.
+Using both `#` and `&` you can manage to enumerate the internal API.
+When using `#` to truncate and cause errors getting the name of the `next parameter`.
+Then using `&` to enumerate the values you could assign to the `filed` parameter (email, username, reset_token).
+Using your good recon you manage to find the reset token and exfiltrate the token via internal API.
+And simply sending a request on that URL you found in the same script as token, you send a request with the token and boom.
+N1 h4ck3rm4n!
+
+---
