@@ -425,3 +425,62 @@ And simply sending a request on that URL you found in the same script as token, 
 N1 h4ck3rm4n!
 
 ---
+
+#### Testing server-side parameter pollution in REST paths
+
+A REST API may place parameters in the `URL path` rather than the query string.
+`/api/users/123`
+
+The path can be broken down into:
+- `api` - root of endpoint.
+- `users` - resource - in this case users.
+- `123` - parameter - specific user.
+
+For example, an application where you can edit your profile based on your username.
+`GET /edit_profile.php?name=peter`
+
+Resulting in this server-side API request:
+`GET /api/private/users/peter`
+
+An attacker might be able to alter the URL path parameters.
+As we now how to exploit paths, we can utilize path traversal.
+URL encoded `peter/../admin` will end up as name parameter.
+`GET /edit_profile.php?name=peter%2f..%2fadmin`
+
+And the server-side.
+`GET /api/private/users/peter/../admin`
+
+If the server-side client or the API normalize this path it may be resolved to
+`/api/private/users/admin`.
+
+#### Testing server-side parameter pollution in structured data formats
+
+As servers use data formats such as `JSON` & `XML`.
+We can attempt to exploit them by injecting data that is structured according to the formats.
+
+Consider an application that allows you to `edit your profile`.
+The changes are applied via `server-side API`.
+When you edit your name the browser makes the `request`:
+```http
+POST /myaccount
+name=peter
+```
+
+Then the server-side API request:
+```http
+PATCH /users/7312/update
+{"name":"peter"}
+```
+
+Let's attempt to add `access_level` parameter to our browser request.
+```http
+POST /myaccount
+name=peter","access_level":"administrator
+```
+
+If this data is added to the server without input sanitization and validation of JSON data.
+It will result in the following server-side request.
+```http
+PATCH /users/7312/update
+{"name":"peter","access_level":"administrator"}
+```
