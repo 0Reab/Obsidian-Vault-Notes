@@ -484,3 +484,40 @@ It will result in the following server-side request.
 PATCH /users/7312/update
 {"name":"peter","access_level":"administrator"}
 ```
+
+*Note*
+On how to identify parameters that you can inject in query string, see Finding hidden parameters section.
+
+And for an example where the client-side user input is JSON data.
+```http
+POST /myaccount
+{"name": "peter\",\"access_level\":\"administrator"}
+```
+
+If the data is decoded but not properly encoded before adding to the server-side JSON data.
+Will result in the following request.
+```http
+PATCH /users/7312/update {"name":"peter","access_level":"administrator"}
+```
+
+All of these examples are valid for XML data too, or in any other structured format.
+
+#### Automated tools
+
+Burp scanner automatically detects suspicious input transformations.
+This behavior doesn't necessarily mean it's a vulnerability, but that it needs testing.
+
+You can also use backslash powered `BApp`, to identify server-side injection vulnerabilities.
+The scanner classifies inputs as:
+- boring
+- interesting
+- vulnerable
+- 
+You will need to manually investigate interesting finds.
+For more info - backslash powered scanning hunting unknown vulnerability classes whitepaper.
+
+#### Preventing server-side parameter pollution
+
+Use a whitelist of characters that don't need encoding.
+Ensure all other user input is encoded before it's included in a server-side request.
+Validate that all input adheres to expected format and structure.

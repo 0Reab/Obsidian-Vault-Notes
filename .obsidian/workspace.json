@@ -22,20 +22,6 @@
             }
           },
           {
-            "id": "497610b904c9ee7b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Hacking/Methodology/Web hax/APIs.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "APIs"
-            }
-          },
-          {
             "id": "9af22b43a634ae3e",
             "type": "leaf",
             "state": {
@@ -49,8 +35,7 @@
               "title": "For note taking"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -208,10 +193,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "497610b904c9ee7b",
+  "active": "4d0feb8052e19683",
   "lastOpenFiles": [
-    "For note taking.md",
     "Hacking/Methodology/Web hax/APIs.md",
+    "For note taking.md",
     "Hacking/Methodology/Web hax/WebSockets.md",
     "Windows/Essential Windows commands.md",
     "Windows/chkdsk.md",

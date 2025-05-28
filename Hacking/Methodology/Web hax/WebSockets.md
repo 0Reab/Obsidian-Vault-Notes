@@ -103,4 +103,64 @@ Some design flaws can only be found in WebSocket handshake:
 - `Flawed Session handling` - generally session context of a handshake will determine the context of WebSocket messages.
 - `Custom HTTP header` - New attack surface introduced by a custom header.
 
-**LAB** - Same as previous lab, but this one has an aggressive but flawed `XSS` protection.  
+**LAB** - Same as previous lab, but this one has an aggressive but flawed `XSS` protection. 
+
+Definitively needed more XSS skills for this room.
+Upon first XSS failure you get IP banned.
+But that can be bypassed by using X-Forwarded-For and spoof your IP.
+Then the obfuscated XSS passes the defense `<img src=1 oNeRrOr=alert 1>`.
+
+#### Cross-site WebSockets
+
+Some WebSocket vulnerabilities arise when an attacker makes a cross-domain WebSocket connection.
+That connections origin would be an attackers website.
+
+This is known as `cross-site WebSocket hijacking attack`.
+
+It involves exploiting `CSRF` vulnerability on a WebSocket handshake.
+This often has big impact and allowing privileged actions on behalf of the victim or data exfiltration from the user.
+
+#### What is cross-site WebSocket hijacking
+
+It arises when the WebSocket `handshake` is vulnerable to `CSRF`.
+Meaning it relies only on the session cookie and there is no CSRF tokens or unpredictable values.
+
+An attacker can create a malicious application that will handle WebSockets connections to the vulnerable application.
+And it will be handled in the context of the user that is on the malicious application.
+
+Then the attacker can send arbitrary messages and read the responses.
+So unlike regular CSRF, this is a two way interaction with the compromised application.
+
+#### Impact
+
+Can enable the attacker to:
+- Perform actions on the behalf of user.
+- Retrieve users sensitive data.
+- Wait for incoming messages containing sensitive data.
+
+Depending on how to server-side is setup for WebSockets.
+It can affect how much access and authorization the attacker will have over those two impacts.
+
+#### Performing an attack
+
+First we need to identify if the WebSocket handshake relies only on the user session-token.
+And no other data, such as CSRF token or randomized or unpredictable values.
+
+Example WebSocket handshake request that is likely vulnerable to hijacking:
+```http
+GET /chat HTTP/1.1
+Host: normal-website.com
+Sec-WebSocket-Version: 13
+Sec-WebSocket-Key: wDqumtseNBJdhkihL6PW7w==
+Connection: keep-alive, Upgrade
+Cookie: session=KOsEJNuflw4Rd9BDNrVmvwBF9rEijeE2
+Upgrade: websocket
+```
+
+*Note*
+`Sec-WebSocket-Key` header contains is a random value for caching proxies.
+It's not used for authentication or session handling.
+
+This is just for allowing cached documents (JS, CSS) to be served from other servers to speed up loading and reduce bandwidth usage.
+
+**LAB** - This shop has a live chat feature using WebSockets, use the exploit server to host html/JS payload to hijack and exfiltrate chat history the gain access to their account.
