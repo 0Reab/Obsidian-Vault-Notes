@@ -124,7 +124,7 @@ Then the frame buster defense is ineffective because the iframe cannot check if 
 <iframe id="victim_website" src="https://victim-website.com" sandbox="allow-forms"></iframe>
 ```
 
-Bot `allow-forms` & `allow-scripts` allow those actions in the iframe.
+Both `allow-forms` & `allow-scripts` allow those actions in the iframe.
 But top-level navigation is disabled, this allows the functionality within the targeted site while still bypassing frame busting. 
 
 **LAB** - Clickjack the user to change the email, website is protected by frame buster.

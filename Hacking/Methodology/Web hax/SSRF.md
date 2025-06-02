@@ -6,7 +6,7 @@ There are two types of SSRF's one where attacker sees what is happening on their
 
 The impact of SSRF is access to data/files/areas, scale to internal networks or reveal auth tokens/creds.
 
-This symbols are uset to make the url ignore the rest of the url when you inject your url from which you want to retrieve data. 
+This symbols are used to make the url ignore the rest of the url when you inject your url from which you want to retrieve data. 
 **&x=**
 
 The target URL where the data is we want to retrieve:
@@ -59,3 +59,15 @@ If working with a blind SSRF where no output is reflected back to you, you'll ne
 
 Some targets can be local host as well.
 Because we are executing that url on the server side, and fetching it to us.
+
+#### Impact of SSRF
+
+- leaking authentication keys
+- leaking sensitive data
+- maybe RCE
+- Allow horizontal pivoting
+- Leapfrog server for other attacks
+
+SSRF attacks often exploit trust relationships of the application to gain access to unauthorized actions.
+Additionally these trust relationships can bleed into other back-end systems.
+

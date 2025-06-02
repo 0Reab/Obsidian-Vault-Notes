@@ -51,3 +51,18 @@ http://localhost:3000/ftp/
 ```endpoints
 /rest/admin/application-configuration
 ```
+
+
+#### Cool http thing
+
+```http
+If-None-Match: W/"7e-ZY7YwAmktldL8HbCPMPYu03ONFk"
+```
+
+This HTTP header I think works kind of like a checksum on the data that the server has stored before transmission.
+So for example, if you have a document that is dynamic, on every GET request after the first one if the document hasn't changed.
+You will get HTTP response code `304 not modified`.
+
+The header, likely does a initial check so no redundant requests with "large" data are sent.
+Omitting it I think causes the check to fail each time, and resend the data even if nothing changed within it.
+
