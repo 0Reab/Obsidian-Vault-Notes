@@ -1,0 +1,3 @@
+***.sketchfab.com**
+*.sketchfab.com
+
