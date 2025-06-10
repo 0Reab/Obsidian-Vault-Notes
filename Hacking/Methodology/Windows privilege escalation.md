@@ -83,7 +83,7 @@ netsh wlan show profile "SSID" key=clear # will show AP password in clear text
 
 These commands will help us learn more about the network the machine is connected to, and the network configuration itself.
 
-## Password hunting
+## Password **hunting**
 
 SAM passwords - topic.
 
@@ -96,7 +96,8 @@ cmdkey /list # lists accounts that have saved passwords and emails associated wi
 ## Firewall & Anti Virus enumeration
 
 ```powershell
-sc query windefend # status and info about windows defender. sc - service control
+Get-MpComputerStatus # av status and info POWERSHELL
+sc query windefend # ** ONLY IN CMD ** status and info about windows defender. sc - service control
 sc queryex type= service # lists all running services - tells you what kind of AV and other defense software is there. (long output)
 
 netsh advfirewall firewall dump # firewall info - might require admin privs.
