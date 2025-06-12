@@ -16,3 +16,9 @@ You can try making a list of emails as payload
 This way both emails can recieve the password reset mail.
 ```
 
+If you run into 404 pages you can try google dorking to find some paths.
+```
+google: "target.com" # uses exact words in searching
+```
+
+And for more discovery try `getallurls`
