@@ -21,4 +21,7 @@ If you run into 404 pages you can try google dorking to find some paths.
 google: "target.com" # uses exact words in searching
 ```
 
-And for more discovery try `getallurls`
+And for more discovery try `getallurls` `waybackurls`
+
+403 bypass with x-forwarded for and ip like 127.0.0.1 or the server ip.
+
