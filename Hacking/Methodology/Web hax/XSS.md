@@ -35,3 +35,15 @@ Blind XSS is similar to a stored XSS (which we covered in task 4) in that your p
 **Example Scenario:**  
   
 A website has a contact form where you can message a member of staff. The message content doesn't get checked for any malicious code, which allows the attacker to enter anything they wish. These messages then get turned into support tickets which staff view on a private web portal.
+
+### Unique Examples
+
+Href tag reflection - `javascript:alert(1)`
+```html
+<a href="javascript:alert(1)">Next &gt;&gt;</a>
+```
+
+This one escapes backend "time countdown" written in JS.
+```javascript
+3');alert('t
+```

@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Hacking/Methodology/Web hax/CORS.md",
-                "mode": "preview",
+                "file": "Hacking/Methodology/Web hax/XSS.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "CORS"
+              "title": "XSS"
             }
           }
         ],
@@ -196,8 +196,8 @@
   },
   "active": "63d4c1f7dac1fdaa",
   "lastOpenFiles": [
-    "Hacking/Methodology/Web hax/Authentication vulnerabilities.md",
     "Hacking/Methodology/Web hax/CORS.md",
+    "Hacking/Methodology/Web hax/Authentication vulnerabilities.md",
     "Hacking/Methodology/Web hax/Authentication 101.md",
     "Hacking/Methodology/Web hax/CSRF.md",
     "Hacking/Methodology/Web hax/SSRF.md",
