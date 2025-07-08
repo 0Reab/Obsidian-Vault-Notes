@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Hacking/Methodology/Web hax/CORS.md",
+                "file": "Hacking/Methodology/Web hax/XSS.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "CORS"
+              "title": "XSS"
             }
           }
         ]
@@ -179,15 +179,16 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "5cfbfc6d7a9d6be3",
+  "active": "63d4c1f7dac1fdaa",
   "lastOpenFiles": [
+    "Hacking/Methodology/Web hax/XXE.md",
+    "Hacking/Methodology/Web hax/XSS.md",
+    "Hacking/Methodology/Web hax/CORS.md",
     "Hacking/Methodology/Web hax/Insecure Deserialization.md",
     "Hacking/Methodology/Web hax/Server-Side Template Injection.md",
     "Hacking/Methodology/Web hax/Open Redirect.md",
     "Pasted image 20250707145554.png",
     "Hacking/Methodology/Web hax/HTTP Parameter Pollution.md",
-    "Hacking/Methodology/Web hax/XSS.md",
-    "Hacking/Methodology/Web hax/CORS.md",
     "Hacking/Methodology/Web hax/Authentication vulnerabilities.md",
     "Hacking/Methodology/Web hax/Authentication 101.md",
     "Hacking/Methodology/Web hax/CSRF.md",
@@ -208,7 +209,6 @@
     "Javascript/JS introduction.md",
     "Hacking/Methodology/Windows privilege escalation.md",
     "Javascript",
-    "Hacking/Methodology/Active directory/Introduction.md",
     "Pasted image 20250430134324.png",
     "Pasted image 20250428174400.png",
     "SQL",

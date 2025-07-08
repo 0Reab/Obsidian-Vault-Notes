@@ -47,3 +47,18 @@ This one escapes backend "time countdown" written in JS.
 ```javascript
 3');alert('t
 ```
+
+#### Reflecting user input in inner html via sink
+
+In a scenario where the front end reflects the user input in the inner html for security reasons the inline script tags will reflect but not execute.
+This can be bypassed by using any other tag except the script tag.
+
+#### jQuery sink
+
+```js
+feedback?returnPath=javascript:alert(document.cookie);
+```
+
+In this example `returnPath` http parameter was reflected in the `back` button on the page.
+And we can run on click JS in `href` attributes.
+
