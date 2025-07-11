@@ -53,4 +53,6 @@ The `TRACE` method performs a loopback message test.
 
 
 **LAB** - Info disclosure in version control history. Find admin password and delete user Carlos.
-**Solution** - xd
+**Solution** - Navigate to `/.git`, download the folder contents `wget -r https://url_here` (-r is recursive).
+Utilize Git GUI application or similar, and browse around, and take a look at `Repository` > `Visualize *branch_name*'s history`.
+

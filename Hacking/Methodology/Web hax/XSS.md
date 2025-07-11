@@ -64,6 +64,23 @@ var searchTerms = ''-alert(1)-'';
 foobar';alert(1);'
 ```
 
+**LAB** - Reflected DOM example. Execute alert() function.
+**Solution** - This web app is utilizing java script files for it's functionality.
+One file is `searchResults.js`.
+It's responsible for handling the search functionality.
+And the search query is sent in form of JSON object in another http request.
+In the JS file there is an alarming function being used with user supplied input.
+`eval('var searchResultsObj = ' + this.responseText);`
+It resides in a function called search().
+So we need to craft a XSS payload to run in this eval context.
+The usual JSON object looks like : `{"searchTerm":"foobar", "results":[]}`
+And we can utilize backslashes to undo escaping of the double quote character, to make them actual quotes for JSON structure.
+Also we can then use other JSON things like brackets and double forward slash for commenting out things.
+Based on this knowledge we can modify the search query to reflect in the JSON object as a valid XSS payload which will be executed by the JS file (which is called for searching).
+`{"searchTerm":"\\"-alert(1)}//", "results":[]}`
+So in this JSON, the JSON ends after the alert because we closed it with curly braces and commented out the rest.
+The double quote before the alert is escaped once and the parser or whatever escapes it again naturally which just makes it a normal double quote.
+So the search term value ends 
 #### Reflecting user input in inner html via sink
 
 In a scenario where the front end reflects the user input in the inner html for security reasons the inline script tags will reflect but not execute.

@@ -49,8 +49,7 @@
               "title": "Access control"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -208,12 +207,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "fdc2d798dfdb4919",
+  "active": "63d4c1f7dac1fdaa",
   "lastOpenFiles": [
+    "Hacking/Methodology/Web hax/Information disclosure.md",
     "Hacking/Methodology/Web hax/Access control.md",
     "Hacking/Methodology/Web hax/Cool web tools.md",
     "Hacking/Methodology/Web hax/Walking an application.md",
-    "Hacking/Methodology/Web hax/Information disclosure.md",
     "Hacking/Methodology/Web hax/Server-Side vulnerabilities.md",
     "Hacking/Methodology/Web hax/Authentication vulnerabilities.md",
     "Hacking/Methodology/Web hax/Amazon AWS.md",
