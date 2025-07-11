@@ -39,3 +39,18 @@ And the key is found there as well, lab solved.
 **Solution** - `/product?productId=1` - if we set Id to be some random value the error discloses. `Apache Struts 2 2.3.31`
 
 
+**LAB** - Source code disclosure via backup files. Find DB password (it's hardcoded).
+**Solution** - `/backup` is a that is "hidden" and contains source code.
+
+
+**LAB** - Admin panel has authentication bypass vuln, but It can't be exploited without a custom http header, find the header and delete user Carlos.
+**Solution** - `X-Custom-IP-Authorization: 127.0.0.1` This header is a custom http header that this app uses to validate requests origin.
+You can find it by using the `TRACE` http method on the blocked endpoint `/admin`.
+It responds with all the headers including custom IP one.
+But of course the IP will be your public one because it's a trace request, so we simply make it into a local host IP.
+
+The `TRACE` method performs a loopback message test.
+
+
+**LAB** - Info disclosure in version control history. Find admin password and delete user Carlos.
+**Solution** - xd

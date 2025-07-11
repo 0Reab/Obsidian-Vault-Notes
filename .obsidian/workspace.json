@@ -34,6 +34,20 @@
               "icon": "lucide-file",
               "title": "Information disclosure"
             }
+          },
+          {
+            "id": "41f42c819bc14265",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Hacking/Methodology/Web hax/Access control.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Access control"
+            }
           }
         ],
         "currentTab": 1
@@ -197,6 +211,8 @@
   "active": "fdc2d798dfdb4919",
   "lastOpenFiles": [
     "Hacking/Methodology/Web hax/Access control.md",
+    "Hacking/Methodology/Web hax/Cool web tools.md",
+    "Hacking/Methodology/Web hax/Walking an application.md",
     "Hacking/Methodology/Web hax/Information disclosure.md",
     "Hacking/Methodology/Web hax/Server-Side vulnerabilities.md",
     "Hacking/Methodology/Web hax/Authentication vulnerabilities.md",
@@ -221,8 +237,6 @@
     "Hacking/Bug bounty/Ferrero.md",
     "Hacking/Bug bounty/Recon basics.md",
     "Hacking/Bug bounty/Epicgames.md",
-    "Hacking/Bug bounty/kontent.ai.md",
-    "Hacking/Bug bounty/Bug bounty - Getting started.md",
     "Javascript",
     "Pasted image 20250430134324.png",
     "Pasted image 20250428174400.png",
