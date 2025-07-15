@@ -4,49 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "3276dc1e0cb0ff0b",
+        "id": "cc7cbfeb01b1e9d7",
         "type": "tabs",
         "children": [
           {
-            "id": "63d4c1f7dac1fdaa",
+            "id": "13cac58d7dab8ca7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Hacking/Methodology/Web hax/XSS.md",
+                "file": "Hacking/Methodology/Web hax/NoSQL injection.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "XSS"
-            }
-          },
-          {
-            "id": "fdc2d798dfdb4919",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Hacking/Methodology/Web hax/Information disclosure.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Information disclosure"
-            }
-          },
-          {
-            "id": "41f42c819bc14265",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Hacking/Methodology/Web hax/Access control.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Access control"
+              "title": "NoSQL injection"
             }
           }
         ]
@@ -207,9 +179,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "63d4c1f7dac1fdaa",
+  "active": "13cac58d7dab8ca7",
   "lastOpenFiles": [
+    "Hacking/Methodology/Web hax/NoSQL injection.md",
+    "Hacking/Methodology/Web hax/XSS.md",
     "Hacking/Methodology/Web hax/Information disclosure.md",
+    "Hacking/Methodology/Web hax/File Upload.md",
+    "Hacking/Methodology/Web hax/File inclusion.md",
     "Hacking/Methodology/Web hax/Access control.md",
     "Hacking/Methodology/Web hax/Cool web tools.md",
     "Hacking/Methodology/Web hax/Walking an application.md",
@@ -217,7 +193,6 @@
     "Hacking/Methodology/Web hax/Authentication vulnerabilities.md",
     "Hacking/Methodology/Web hax/Amazon AWS.md",
     "Hacking/Methodology/Web hax/Server-Side Template Injection.md",
-    "Hacking/Methodology/Web hax/XSS.md",
     "Hacking/Methodology/Web hax/OS command injection - RCE.md",
     "Hacking/Methodology/Web hax/XXE.md",
     "Hacking/Methodology/Web hax/CORS.md",
@@ -228,14 +203,11 @@
     "Hacking/Methodology/Web hax/Authentication 101.md",
     "Hacking/Methodology/Web hax/CSRF.md",
     "Hacking/Methodology/Web hax/SSRF.md",
-    "Hacking/Methodology/Web hax/File Upload.md",
     "Hacking/Bug bounty/My bugs.md",
     "Hacking/Methodology/Exploitation/MSFvenom & MSFconsole.md",
     "Hacking/Bug bounty/Tricks.md",
     "Hacking/Bug bounty/family home plans.md",
     "Hacking/Bug bounty/Ferrero.md",
-    "Hacking/Bug bounty/Recon basics.md",
-    "Hacking/Bug bounty/Epicgames.md",
     "Javascript",
     "Pasted image 20250430134324.png",
     "Pasted image 20250428174400.png",
