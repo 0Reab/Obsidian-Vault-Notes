@@ -210,3 +210,132 @@ It's common practice the servers store static files in specific directories.
 These rules can also be vulnerable to web cache deception.
 *Note:* To exploit these types of rules, you need to be familiar with path traversal vulnerability.
 
+#### Normalization discrepancies
+
+When URL paths are normalized, this involves decoding URL encoded characters and resolving dot-segments in paths.
+
+Following the same principle like previous discrepancy based cache deception attacks.
+We can use this to our advantage and exploit cached static directories such as `/assets` with path traversal.
+For example:
+`/static..%2fprofile` 
+
+This can resolve into `/profile` by the origin server, simply omitting the `/static` part thus returning the profile data for caching because of the directory caching rules.
+Because in this discrepancy the caching server sees the whole path and triggers a caching rule on `/static..%2fprofile`
+
+#### Detecting normalization by the `origin` server
+
+To test if the paths are normalized by the origin server we need a non-cached endpoint.
+This can be done via POST request or others.
+
+So for example `/aaa/../profile` is our path traversing payload.
+
+If the origin server return the profile page normally we know that the path traversal has been normalized into `/profile`.
+Otherwise if get 404 then our traversing failed.
+
+*Note:* It is important to encode only last slash because some CDNs match the slash following the static directory prefix.
+Or alternatively a dot instead of a slash, or all path traversing sequence.
+
+#### Detecting normalization by the `cache` server
+
+Same thing for the cache server.
+If we find a resource that is likely to be cached considering it's directory and file type.
+`/assets/js/stockCheck.js`
+
+After confirming it's caching we can attempt to add path traversal to the URL and observe if the path is cached or not.
+If we try `/aaa/..%2fassets/js/stockCheck.js`
+
+And the response is cached that means that the cache server normalized the path back to it's original URL.
+If the response is now not cached we can conclude that the path has not been normalized.
+We can assume that the `/assets` prefix is a caching rule.
+
+Another test is to add path traversal after the directory prefix.
+So `/assets/js/stockCheck.js` again, into `/assets/..%2fjs/stockCheck.js`
+
+By this we can attempt to satisfy a caching rule that caches based on `/assets` prefix.
+Therefore if the caching fails we know that the path has been normalized into `/js/stockCheck.js` which does not satisfy the `/assets` caching prefix rule.
+Otherwise if it does cache we know the path has not been normalized and it stayed the same.
+
+In conclusion you can't tell for certain of the normalization occurs or not without attempting the exploit.
+But you can get the feeling for it's behavior by testing.
+Additionally if you suspect you can try caching `/assets/aaa` and determine the prefix rule.
+There might be other rules in caching play that we are unaware of, so keep that in mind.
+
+
+#### Exploiting the normalization by the `origin` server
+
+For example a path `/assets/..%2fprofile`:
+- The cache interprets the path as is, no normalization, caches the response.
+- The origin normalizes the path and returns profile info.
+
+
+**LAB - Exploiting origin server normalization for web cache deception**
+To solve the lab, find the API key for the user `carlos`. You can log in to your own account using the following credentials: `wiener:peter`.
+We have provided a list of possible delimiter characters to help you solve the lab: [Web cache deception lab delimiter list](https://portswigger.net/web-security/web-cache-deception/wcd-lab-delimiter-list).
+
+**Solution** :
+```js
+<script>document.location="https://0a8900ea033c86928194348c007100d7.web-security-academy.net/resources/..%2Fmy-account?&fi=bi"</script>
+```
+After browsing the web app for a bit, to allow requests to flow thru the proxy.
+We apply scope filter for easy lookup, and I notice multiple JS scripts originating from `/resources` path and all are cached.
+Utilizing the path traversal the server for caching is not normalizing the path and hitting `/resources` prefix caching rule.
+And the origin server is normalizing the path into `/profile` allowing it's normal response fetch and caching.
+
+#### Exploiting the normalization by the `cache` server
+
+If the cache server is normalizing the path but origin is not.
+We can construct this kind of payload.
+
+`/dynamic-path/../static-dir-prefix`
+In other words...
+`/profile/../assets` - for example
+
+*Note:* When exploiting path traversal in cache server normalization URL encode the whole path traversal sequence!
+`/profile%2f%2e%2e%2fstatic`
+
+- The cache server is likely to interpret the path as `/static` as expected.
+- The origin server interprets the path as is `/profile%2f%2e%2e%2fstatic`
+
+*Keynote:*
+The origin server is likely to return an error, so path traversal is not enough for this exploit thus we will combine the URL delimiter as mentioned before to truncate the path.
+
+This exploitation is the same concept as the previous explainer of normalization of path in the origin server, but reversing who does the normalization.
+And we simply just run into origin not fetching normalized URL paths, ergo the delimiter need to allow actual data fetch by origin.
+`/profile;%2f%2e%2e%2fstatic`
+
+(under the pretense that the cache server doesn't use that delimiter as origin.)
+
+
+**LAB: Exploiting cache server normalization for web cache deception**
+To solve the lab, find the API key for the user `carlos`. You can log in to your own account using the following credentials: `wiener:peter`.
+We have provided a list of possible delimiter characters to help you solve the lab: [Web cache deception lab delimiter list](https://portswigger.net/web-security/web-cache-deception/wcd-lab-delimiter-list).
+
+**Solution** - Found %23 - `#` can be used as a delimiter for the origin server.
+Same path is cached as before `/resources` contains JS stuff.
+So we combine the `/profile#/../resources?&a=b`
+The path traversal is URL encoded whole `/../` into `%23%2F..%2F` and we have a cache identifier a=b which we can change when delivering exploit.
+The `#` is used to delimit the path and allow origin server to fetch the dynamic response.
+And the cache server does not care about `#` and normalizes that path into `/resources` triggering directory prefix caching rule.
+
+#### Exploiting file name cache rules
+
+Certain files such as `robots.txt`, `index.html`, and `favicon.ico` are common on web servers.
+They are often cached because of the infrequent changes.
+
+These caching rules usually go by exact filename.
+So try `GET` on some of them and see if it hits.
+
+This is susceptible to the same vulnerability as other path normalization vulnerabilities.
+`/profile%2f%2e%2e%2findex.html`
+So using path traversal could end up caching the response of the `/profile` if the caching server normalizes the path into `/index.html`
+If the response isn't cached, this probably means the path was not normalized and taken as is.
+
+As with other normalization vulns this will only work if the cache server normalizes the path and the origin doesn't, simply because the caching rule is exact file name matching.
+
+#### Preventing web cache deception vulnerabilities
+
+1. Always use `Cache-Control` headers to mark dynamic resources, set as `no-store` and `private`.
+2. Configure your CDN to not override the `Cache-Control` header.
+3. Use built in CDNs protection against web cache deception.
+	- It verifies if the `Content-Type` header value matches the URL file ext.
+4. Verify that there are no discrepancies between URL parsing of origin and cache servers.
