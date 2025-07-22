@@ -1,6 +1,5 @@
-My accounts:
-test@gmail.com:r3ND4wEcZPp8wPW
-test2@gmail.com:r3ND4wEcZPp8wPW
+dGVzdEBnbWFpbC5jb206cjNORDR3RWNaUHA4d1BXQAo=
+dGVzdDJAZ21haWwuY29tOnIzTkQ0d0VjWlBwOHdQV0AK
 
 Learned stuff
 

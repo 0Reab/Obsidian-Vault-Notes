@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "549978ac558b47cc",
+        "id": "8037aa3fe51fd82b",
         "type": "tabs",
         "children": [
           {
-            "id": "7b6420aad9c76b28",
+            "id": "0344f7214e783c51",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Hacking/Methodology/Web hax/SSRF.md",
+                "file": "Hacking/Methodology/Web hax/Authentication vulnerabilities.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "SSRF"
+              "title": "Authentication vulnerabilities"
             }
           }
         ]
@@ -179,12 +179,14 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "7b6420aad9c76b28",
+  "active": "0344f7214e783c51",
   "lastOpenFiles": [
-    "Hacking/Methodology/Web hax/Open Redirect.md",
-    "Hacking/Methodology/Web hax/SSRF.md",
-    "Hacking/Methodology/Web hax/Server-Side vulnerabilities.md",
     "Hacking/Methodology/Web hax/Web Cache Deception.md",
+    "CTF/Labz/OWASP Juice Shop.md",
+    "Hacking/Methodology/Web hax/Authentication vulnerabilities.md",
+    "Hacking/Methodology/Web hax/SSRF.md",
+    "Hacking/Methodology/Web hax/Open Redirect.md",
+    "Hacking/Methodology/Web hax/Server-Side vulnerabilities.md",
     "Hacking/Methodology/Web hax/CORS.md",
     "Hacking/Methodology/Web hax/NoSQL injection.md",
     "Hacking/Methodology/Web hax/SQL injections.md",
@@ -195,7 +197,6 @@
     "Hacking/Methodology/Web hax/Access control.md",
     "Hacking/Methodology/Web hax/Cool web tools.md",
     "Hacking/Methodology/Web hax/Walking an application.md",
-    "Hacking/Methodology/Web hax/Authentication vulnerabilities.md",
     "Hacking/Methodology/Web hax/Amazon AWS.md",
     "Hacking/Methodology/Web hax/Server-Side Template Injection.md",
     "Hacking/Methodology/Web hax/OS command injection - RCE.md",
@@ -207,7 +208,6 @@
     "Hacking/Methodology/Web hax/CSRF.md",
     "Hacking/Bug bounty/My bugs.md",
     "Hacking/Methodology/Exploitation/MSFvenom & MSFconsole.md",
-    "Hacking/Bug bounty/Tricks.md",
     "Javascript",
     "Pasted image 20250430134324.png",
     "Pasted image 20250428174400.png",
