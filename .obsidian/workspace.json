@@ -11,14 +11,14 @@
             "id": "21a787fb4d2afeac",
             "type": "leaf",
             "state": {
-              "type": "split-diff-view",
+              "type": "markdown",
               "state": {
-                "aFile": "Hacking/Methodology/Essentials/Getting the shell.md",
-                "bFile": "Hacking/Methodology/Essentials/Getting the shell.md",
-                "aRef": ""
+                "file": "Hacking/Methodology/Web hax/CSRF.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "diff",
-              "title": "Diff: Getting the shell"
+              "icon": "lucide-file",
+              "title": "CSRF"
             }
           }
         ]
@@ -179,7 +179,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "21a787fb4d2afeac",
+  "active": "5cfbfc6d7a9d6be3",
   "lastOpenFiles": [
     "Hacking/Methodology/Essentials/Getting the shell.md",
     "Hacking/Methodology/Web hax/CSRF.md",
