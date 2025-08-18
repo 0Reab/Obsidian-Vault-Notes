@@ -21,7 +21,8 @@ So an example of a function that meets the conditions of being vulnerable to CSR
 To make that action user makes a http request like this...
 
 ```http
-POST /email/change HTTP/1.1 Host: vulnerable-website.com 
+POST /email/change HTTP/1.1 
+Host: vulnerable-website.com 
 Content-Type: application/x-www-form-urlencoded
 Content-Length: 30
 Cookie: session=yvthwsztyeQkAPzeQ5gHgTvlyxHfsAfE
