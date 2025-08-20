@@ -132,5 +132,14 @@ Write-Error -Message "It's a trap?" -ErrorAction Stop # throw error?
 ```powershell
 # error handling
 try { Test-SpaceX -ErrorAction Stop } catch { Write-Output "Launch problem!" Write-Output $_ }
-
 ```
+
+```powershell
+# create file
+New-Item -path C:\Scripts -name "something" -type "file" -value "xd"
+```
+
+notes:
+- use Get-Help to find syntax for cmdlet and it's set aliases
+- tree /f - tree with files
+- ls -Name - only filenames
